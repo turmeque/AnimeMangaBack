@@ -1,1 +1,7 @@
-node_modules
+dist
+tsconfig.json
+seeders
+migrations/
+node_modules/
+.env
+desktop.ini
