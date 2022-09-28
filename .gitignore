@@ -1,5 +1,4 @@
 dist
-tsconfig.json
 seeders
 migrations/
 node_modules/
