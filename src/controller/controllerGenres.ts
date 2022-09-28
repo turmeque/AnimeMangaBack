@@ -8,12 +8,12 @@ import {Op} from 'sequelize'
 import cloudinary from "../../config/utils";
 
 
-exports.getAllAnimes =async (req:Request,res:Response) => {
+exports.getAllGenres =async (req:Request,res:Response) => {
   
     try {
         
-         const animesDB= await  db.Animes.findAll();
-         res.json({animesDB})
+         const genresDB= await  db.Genres.findAll();
+         res.json({genresDB})
    } catch (error) {
         
     }
