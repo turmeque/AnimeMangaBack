@@ -2,7 +2,7 @@
 import { Model } from "sequelize";
 
 interface MangaAttributes {
-  id: number;
+  id: string;
   title: string;
   image: string;
   score: number;
@@ -20,7 +20,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    id!: number;
+    id!: string;
     title!: string;
     image!: string;
     score!: number;
@@ -37,10 +37,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
   Manga.init(
     {
       id: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true,
       },
       title: {
         type: DataTypes.STRING,
@@ -52,6 +52,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
       },
       score: {
         type: DataTypes.FLOAT,
+        defaultValue: 5,
       },
       popularity: {
         type: DataTypes.FLOAT,
