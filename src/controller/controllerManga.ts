@@ -170,11 +170,18 @@ export const getMangas = async () => {
 
 export const getMangaGenres = async () => {
   const url = "https://api.jikan.moe/v4/genres/manga";
-  const response = await axios(url);
-  const genre = response.data.data.map((d: { name: any }) => {
-    return {
-      name: d.name,
-    };
-  });
-  return genre;
+  const genres = db.GenresManga.findAll();
+  if (!genres.length) {
+    const response = await axios(url);
+    const genre = response.data.data.map(
+      (d: { [x: string]: any; name: any }) => {
+        return {
+          id: d.mal_id,
+          name: d.name,
+        };
+      }
+    );
+    await db.GenresManga.bulkCreate(genre);
+    return genre;
+  } else return genres;
 };
