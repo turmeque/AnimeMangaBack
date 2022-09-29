@@ -185,3 +185,29 @@ export const getMangaGenres = async () => {
     return genre;
   } else return genres;
 };
+
+export const getMangaById = async (id: any) => {
+  const url = `https://api.jikan.moe/v4/manga/${id}`;
+  const mangaDb = await db.Manga.findByPk(id);
+  // console.log(mangaDb);
+  if (!mangaDb) {
+    const response = await axios.get(url);
+    const d = response.data.data;
+    const manga = {
+      id: d.mal_id,
+      title: d.titles
+        .filter((d: { type: string }) => d.type === "Default")
+        .map((d: { title: any }) => d.title)
+        .join(" "),
+      image: d.images.jpg.large_image_url,
+      score: d.score !== null ? d.score : 5,
+      popularity: d.popularity,
+      chapters: d.chapters !== null ? d.chapters : 100,
+      status: d.status,
+      synopsis: d.synopsis,
+      genres: d.genres.map((d: { name: any; type: any }) => d.name).join(", "),
+    };
+
+    return manga;
+  } else return mangaDb;
+};
