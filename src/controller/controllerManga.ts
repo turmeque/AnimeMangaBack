@@ -18,6 +18,7 @@ export const getMangas = async () => {
 
     const callOne = response.data.data.map(
       (d: {
+        [x: string]: any;
         genres: any;
         mal_id: any;
         synopsis: any;
@@ -39,9 +40,9 @@ export const getMangas = async () => {
             .map((d: { title: any }) => d.title)
             .join(" "),
           image: d.images.jpg.large_image_url,
-          score: d.score,
+          score: d.score !== null ? d.score : 5,
           popularity: d.popularity,
-          chapters: d.chapters,
+          chapters: d.chapters !== null ? d.chapters : 100,
           status: d.status,
           synopsis: d.synopsis,
           genres: d.genres
@@ -53,6 +54,7 @@ export const getMangas = async () => {
 
     const callTwo = response2.data.data.map(
       (d: {
+        [x: string]: any;
         genres: any;
         mal_id: any;
         synopsis: any;
@@ -74,9 +76,9 @@ export const getMangas = async () => {
             .map((d: { title: any }) => d.title)
             .join(" "),
           image: d.images.jpg.large_image_url,
-          score: d.score,
+          score: d.score !== null ? d.score : 5,
           popularity: d.popularity,
-          chapters: d.chapters,
+          chapters: d.chapters !== null ? d.chapters : 100,
           status: d.status,
           synopsis: d.synopsis,
           genres: d.genres
@@ -88,6 +90,7 @@ export const getMangas = async () => {
 
     const callTree = response3.data.data.map(
       (d: {
+        [x: string]: any;
         genres: any;
         mal_id: any;
         synopsis: any;
@@ -109,9 +112,9 @@ export const getMangas = async () => {
             .map((d: { title: any }) => d.title)
             .join(" "),
           image: d.images.jpg.large_image_url,
-          score: d.score,
+          score: d.score !== null ? d.score : 5,
           popularity: d.popularity,
-          chapters: d.chapters,
+          chapters: d.chapters !== null ? d.chapters : 100,
           status: d.status,
           synopsis: d.synopsis,
           genres: d.genres
@@ -123,6 +126,7 @@ export const getMangas = async () => {
 
     const callFour = response4.data.data.map(
       (d: {
+        [x: string]: any;
         genres: any;
         mal_id: any;
         synopsis: any;
@@ -144,9 +148,9 @@ export const getMangas = async () => {
             .map((d: { title: any }) => d.title)
             .join(" "),
           image: d.images.jpg.large_image_url,
-          score: d.score,
+          score: d.score !== null ? d.score : 5.0,
           popularity: d.popularity,
-          chapters: d.chapters,
+          chapters: d.chapters !== null ? d.chapters : 100,
           status: d.status,
           synopsis: d.synopsis,
           genres: d.genres
