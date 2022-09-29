@@ -12,10 +12,10 @@ async function getAnimes() {
 
     let animes: any = [];
     try {
-      const resApi = await axios.get(`${url2}`);
-      const resApi2 = await axios.get(`${url}`);
-      const resApi3 = await axios.get(`${url3}`);
-      const resApi4 = await axios.get(`${url4}`);
+      const resApi = await axios.get(url2);
+      const resApi2 = await axios.get(url);
+      const resApi3 = await axios.get(url3);
+      const resApi4 = await axios.get(url4);
       resApi.data.data.map((a: any) => {
         animes.push({
           title: a.title,
@@ -73,7 +73,7 @@ async function getAnimes() {
           genres: a.genres.map((g: any) => g.name),
         });
       });
-
+      console.log('animes')
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
@@ -95,8 +95,8 @@ function preCarga() {
     return { msg: "Genres Creados en db" };
   });
 }
-// preCarga()
-// getAnimes()
+preCarga()
+getAnimes()
 
 const port = process.env.PORT || 3000;
 
