@@ -87,7 +87,7 @@ async function getAnimes() {
     axios.get (`https://api.jikan.moe/v4/genres/anime`).then((res)=>{
       let resApi = res.data.data.map((G:any)=>{
   const  obj = {
-    name:G.name
+   name:G.name
   }
   return obj;
   })
@@ -95,8 +95,35 @@ async function getAnimes() {
   return { msg: "Genres Creados en db" }
     })
   }
-// preCarga()
-// getAnimes()
+  
+
+ async function preCargaTopAnimes(){
+ let top:any=[]
+  let api= await axios.get (`https://api.jikan.moe/v4/top/anime`)
+       api.data.data.map((G:any)=>{
+  top.push({
+    title: G.title,
+    image:G.images.jpg.image_url,
+    trailer:G.url,
+    type:G.type,
+    release:G.string,
+    rating:G.score,
+    description:G.synopsis,
+    popularity:G.popularity,
+    producers:G.producers.map((p:any)=>p.name),
+
+    genres:G.genres.map((g:any)=>g.name)
+  
+  })
+  })
+  await db.TopAnimes.bulkCreate(top)
+  return { msg: "TopAnimes Creados en db" }
+    
+  }
+
+  // preCarga()
+  // getAnimes()
+  // preCargaTopAnimes()
 
 
 
