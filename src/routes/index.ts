@@ -1,9 +1,4 @@
-require("dotenv").config();
-const { Router } = require("express");
-const router = Router();
-const anime = require("./animes.ts");
-const genre = require("./genres.ts");
-import manga from "./manga.routes";
+
 
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
   res.send("Hello world");
