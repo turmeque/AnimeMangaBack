@@ -11,6 +11,7 @@ interface MangaAttributes {
   status: string;
   synopsis: string;
   genres: string;
+  price: number;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -29,7 +30,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     status!: string;
     synopsis!: string;
     genres!: string;
-
+    price!: number;
     static associate(models: any) {
       // define association here
     }
@@ -68,6 +69,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
       },
       genres: {
         type: DataTypes.STRING,
+      },
+      price: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
       },
     },
     {

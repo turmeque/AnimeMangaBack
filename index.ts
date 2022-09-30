@@ -98,6 +98,7 @@ function preCarga() {
 preCarga()
 getAnimes()
 
+
 const port = process.env.PORT || 3000;
 
 db.sequelize.sync({ force: false }).then(async () => {
