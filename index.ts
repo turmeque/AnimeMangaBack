@@ -95,12 +95,12 @@ function preCarga() {
     return { msg: "Genres Creados en db" };
   });
 }
-// preCarga()
-// getAnimes()
+preCarga();
+getAnimes();
 
 const port = process.env.PORT || 3000;
 
-db.sequelize.sync({ force: false }).then(async () => {
+db.sequelize.sync({ force: true }).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
