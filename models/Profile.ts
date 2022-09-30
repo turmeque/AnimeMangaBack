@@ -1,5 +1,5 @@
 "use strict";
-import { Model } from "sequelize";
+import { Model, UUIDV1 } from "sequelize";
 
 interface ProfileAttributes {
   id: number;
@@ -19,14 +19,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
     static associate(models: any) {
       // define association here
-      Profile.belongsTo(models.Users, { foreignKey: "userId" });
+      // Profile.belongsTo(models.Users, { foreignKey: "userId" });
+      Profile.hasOne(models.Users);
     }
   }
   Profile.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: UUIDV1,
         allowNull: false,
         primaryKey: true,
       },
@@ -46,6 +47,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
+      timestamps: false,
       modelName: "Profile",
     }
   );
