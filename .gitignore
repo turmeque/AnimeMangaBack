@@ -1,0 +1,7 @@
+
+dist
+seeders
+migrations/
+node_modules/
+.env
+desktop.ini
