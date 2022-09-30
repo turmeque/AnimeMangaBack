@@ -121,9 +121,9 @@ async function getAnimes() {
     
   }
 
-  // preCarga()
-  // getAnimes()
-  // preCargaTopAnimes()
+  preCarga()
+  getAnimes()
+  preCargaTopAnimes()
 
 
 
