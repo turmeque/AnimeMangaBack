@@ -18,7 +18,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     cellphone!: number;
     static associate(models: any) {
       // define association here
-      Users.hasOne(models.Profile);
+      // Users.hasOne(models.Profile);
+      Users.belongsTo(models.Profile);
     }
   }
   Users.init(
@@ -44,12 +45,13 @@ module.exports = (sequelize: any, DataTypes: any) => {
         allowNull: true,
       },
       cellphone: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.CHAR,
         allowNull: false,
       },
     },
     {
       sequelize,
+      timestamps: false,
       modelName: "Users",
     }
   );
