@@ -11,8 +11,8 @@ router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
 });
 
 router.use("/manga", manga);
-router.use("/user", users);
 router.use("/animes", anime);
 router.use("/genres", genre);
+router.use("/user", users);
 
 export default router;
