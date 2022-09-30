@@ -34,6 +34,7 @@ export const getMangas = async () => {
           map(arg0: (d: any) => any): unknown;
           title: any;
         };
+        price: number;
       }) => {
         return {
           // id: d.mal_id,
@@ -50,6 +51,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
+          price: 9.99,
         };
       }
     );
@@ -70,6 +72,7 @@ export const getMangas = async () => {
           map(arg0: (d: any) => any): unknown;
           title: any;
         };
+        price: number;
       }) => {
         return {
           // id: d.mal_id,
@@ -86,6 +89,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
+          price: 9.99,
         };
       }
     );
@@ -106,6 +110,7 @@ export const getMangas = async () => {
           map(arg0: (d: any) => any): unknown;
           title: any;
         };
+        price: number;
       }) => {
         return {
           // id: d.mal_id,
@@ -122,6 +127,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
+          price: 9.99,
         };
       }
     );
@@ -142,6 +148,7 @@ export const getMangas = async () => {
           map(arg0: (d: any) => any): unknown;
           title: any;
         };
+        price: number;
       }) => {
         return {
           // id: d.mal_id,
@@ -158,6 +165,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
+          price: 9.99,
         };
       }
     );
@@ -194,10 +202,11 @@ export const getMangaGenres = async () => {
 
 export const getMangaById = async (id: any) => {
   const url = `https://api.jikan.moe/v4/manga/${id}`;
-  //it search it first in the DB
-  const mangaDb = await db.Manga.findByPk(id);
-  //if exists in DB return DB info, else return request to the API
-  if (!mangaDb) {
+
+  if (id.length > 10) {
+    const mangaDb = await db.Manga.findByPk(id);
+    return mangaDb;
+  } else {
     const response = await axios.get(url);
     const d = response.data.data;
     const manga = {
@@ -213,10 +222,10 @@ export const getMangaById = async (id: any) => {
       status: d.status,
       synopsis: d.synopsis,
       genres: d.genres.map((d: { name: any; type: any }) => d.name).join(", "),
+      price: 9.99,
     };
-
     return manga;
-  } else return mangaDb;
+  }
 };
 
 //this function brings 25 top mangas
@@ -239,6 +248,7 @@ export const getTopManga = async () => {
         map(arg0: (d: any) => any): unknown;
         title: any;
       };
+      price: number;
     }) => {
       return {
         id: d.mal_id,
@@ -255,6 +265,7 @@ export const getTopManga = async () => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
+        price: 9.99,
       };
     }
   );
@@ -325,6 +336,7 @@ export const searchByName = async (name: any) => {
       status: any;
       synopsis: any;
       genres: { name: any; type: any }[];
+      price: number;
     }) => {
       return {
         id: d.mal_id,
@@ -341,6 +353,7 @@ export const searchByName = async (name: any) => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
+        price: 9.99,
       };
     }
   );
