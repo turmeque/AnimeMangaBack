@@ -7,5 +7,13 @@ const router = Router();
 
 router.get("/",
 animes.getAllAnimes
+);
+
+router.get("/name", 
+animes.forNameAndEpisodes
+ 
+    
 )
+
+
 module.exports= router

@@ -4,7 +4,6 @@ const router = Router();
 const anime = require("./animes.ts");
 const genre = require("./genres.ts");
 import manga from "./manga.routes";
-import users from "./user.routes";
 
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
   res.send("Hello world");
@@ -13,6 +12,5 @@ router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
 router.use("/manga", manga);
 router.use("/animes", anime);
 router.use("/genres", genre);
-router.use("/user", users);
 
 export default router;
