@@ -1,11 +1,18 @@
 require("dotenv").config();
 import axios from "axios";
+import { User } from "oidc-client";
 import db from "../../models";
-import { users } from "../../seeders/users";
+//import { users } from "../../seeders/users";
 
 export const createUser = async (obj: any) => {
   const { username, email, password, cellphone } = obj;
-  if (!username || !email || !password || !cellphone) {
+  
+  
+  const exists= await db.Users.findOne({ where: { username: username } });
+        if (exists) 
+        return ({ Info: "User already exists" });
+  
+        if (!username || !email || !password || !cellphone) {
     throw "Missing data require to create a new user";
   }
   const profile = await db.Profile.create({ username });
@@ -13,7 +20,7 @@ export const createUser = async (obj: any) => {
   // console.log(profile_id);
   const newUser = await db.Users.create(obj);
   newUser.setProfile(profile_id);
-  return "User created succesfully";
+  return newUser;
 };
 
 export const getAllUsers = async () => {

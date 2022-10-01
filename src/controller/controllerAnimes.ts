@@ -25,17 +25,12 @@ exports.getAllAnimes =async (req:Request,res:Response) => {
 exports.forNameAndEpisodes = async (req:Request,res:Response)=>{
     const {name}=req.query
     try {
-        function generate(){
-            let num = Math.floor(Math.random()*1000);
-            return num
-        }
+      
         let animeInfo :any=[]
     
         const info = await axios.get(`https://api.jikan.moe/v4/anime?q=${name}`);
         info.data.data.map((a:any)=>{
-            animeInfo.push(
-                generate(),
-                {
+            animeInfo.push({
 
         id:a.mal_id,
         title: a.title,
@@ -48,6 +43,7 @@ exports.forNameAndEpisodes = async (req:Request,res:Response)=>{
         popularity:a.popularity,
         producers:a.producers.map((p:any)=>p.name),
         genres:a.genres.map((g:any)=>g.name),
+        price:a.score +20
     }) 
     
     })

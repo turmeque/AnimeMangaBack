@@ -51,7 +51,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-          price: 9.99,
+          price: d.score + 50,
         };
       }
     );
@@ -89,7 +89,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-          price: 9.99,
+            price: d.score + 50,
         };
       }
     );
@@ -127,7 +127,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-          price: 9.99,
+            price: d.score + 50,
         };
       }
     );
@@ -165,7 +165,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-          price: 9.99,
+            price: d.score + 50,
         };
       }
     );
@@ -222,7 +222,7 @@ export const getMangaById = async (id: any) => {
       status: d.status,
       synopsis: d.synopsis,
       genres: d.genres.map((d: { name: any; type: any }) => d.name).join(", "),
-      price: 9.99,
+      price: d.score + 50,
     };
     return manga;
   }
@@ -265,7 +265,7 @@ export const getTopManga = async () => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
-        price: 9.99,
+          price: d.score + 50,
       };
     }
   );
@@ -353,7 +353,7 @@ export const searchByName = async (name: any) => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
-        price: 9.99,
+         
       };
     }
   );

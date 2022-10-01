@@ -29,6 +29,7 @@ async function getAnimes() {
           popularity: a.popularity,
           producers: a.producers.map((p: any) => p.name),
           genres: a.genres.map((g: any) => g.name),
+          price:a.score + 30
         });
       });
       resApi2.data.data.map((a: any) => {
@@ -43,6 +44,7 @@ async function getAnimes() {
           popularity: a.popularity,
           producers: a.producers.map((p: any) => p.name),
           genres: a.genres.map((g: any) => g.name),
+          price:a.score + 30
         });
       });
 
@@ -58,6 +60,7 @@ async function getAnimes() {
           popularity: a.popularity,
           producers: a.producers.map((p: any) => p.name),
           genres: a.genres.map((g: any) => g.name),
+          price:a.score + 30
         });
       });
       resApi4.data.data.map((a: any) => {
@@ -72,6 +75,7 @@ async function getAnimes() {
           popularity: a.popularity,
           producers: a.producers.map((p: any) => p.name),
           genres: a.genres.map((g: any) => g.name),
+          price:a.score + 30
         });
       });
 
@@ -113,8 +117,8 @@ async function getAnimes() {
     description:G.synopsis,
     popularity:G.popularity,
     producers:G.producers.map((p:any)=>p.name),
-
-    genres:G.genres.map((g:any)=>g.name)
+    genres:G.genres.map((g:any)=>g.name),
+    price:G.score + 30
   
   })
   })
