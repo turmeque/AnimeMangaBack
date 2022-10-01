@@ -32,7 +32,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     genres!: string;
     price!: number;
     static associate(models: any) {
-      // define association here
+      Manga.belongsToMany(models.Purchases, { through: 'purchase_manga' })
+     
     }
   }
   Manga.init(
@@ -77,6 +78,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     },
     {
       sequelize,
+      timestamps: false,
       modelName: "Manga",
     }
   );
