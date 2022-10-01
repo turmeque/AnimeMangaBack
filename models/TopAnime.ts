@@ -1,6 +1,6 @@
 import { DataTypes, UUIDV1, Model, Sequelize, STRING } from 'sequelize'
 
-interface AnimeAttributes {
+interface TopAnimeAttributes {
   id: number;
   title: string;
   image: string;
@@ -12,12 +12,11 @@ interface AnimeAttributes {
   popularity:number;
   genres:string
   price: number;
-  
  
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
-  class Animes extends Model implements AnimeAttributes {
+  class TopAnimes extends Model implements TopAnimeAttributes {
     id!: number;
     title!: string;
     image!: string;
@@ -31,13 +30,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price!: number;
 
     static associate(models: any) {
-       Animes.belongsToMany(models.Genres, { through: 'anime_genre' })
-      Animes.belongsToMany(models.Purchases, { through: 'purchase_anime' })
-
+     //  TopAnimes.belongsToMany(models.Genres, { through: 'anime_genre' })
      
     }
   }
-  Animes.init({
+  TopAnimes.init({
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -87,7 +84,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
   }, {
     sequelize,
     timestamps: false,
-    modelName: "Animes"
+    modelName: "TopAnimes"
   })
-  return Animes
+  return TopAnimes
 }
