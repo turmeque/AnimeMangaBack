@@ -28,7 +28,7 @@ export const getAllUsers = async () => {
   return allUsers;
 };
 
-export const getUserById = async (id: any) => {
-  const user = await db.Users.findByPk(id);
+export const getUserEmail= async (email:any) => {
+  const user = await db.Users.findOne({ where: { email:email } });
   return user;
 };
