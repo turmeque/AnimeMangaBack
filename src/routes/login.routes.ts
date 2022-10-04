@@ -4,7 +4,7 @@ const auth = require("../../middlewares/auth");
 import {
   signUp,
   getAllUsers,
-  getUserById,
+  getUserEmail,
   signIn,
 } from "../controller/controllerUsers";
 const server = Router();
@@ -29,7 +29,7 @@ server.post("/auth", async (req, res) => {
   }
 });
 
-server.get("/users", auth, async (req, res) => {
+server.get("/users", async (req, res) => {
   try {
     const users = await getAllUsers();
     res.status(200).json(users);
@@ -41,7 +41,7 @@ server.get("/users", auth, async (req, res) => {
 server.get("/:email", async (req, res) => {
   const { email } = req.params;
   try {
-    const user = await getUserById(email);
+    const user = await getUserEmail(email);
     res.status(200).json(user);
   } catch (error) {
     res.status(400).json({ msg: "Something went  wrong" });

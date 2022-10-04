@@ -36,14 +36,14 @@ export const signIn = async (obj: any) => {
       throw "Invalid password!!";
     }
   }
+};
 
 export const getAllUsers = async () => {
   const allUsers = await db.Users.findAll();
   return allUsers;
 };
 
-
 export const getUserEmail = async (email: any) => {
   const user = await db.Users.findOne({ where: { email } });
-  return user
+  return user;
 };
