@@ -8,10 +8,10 @@ const isAdminRole = (req, res = response, next) => {
     });
   }
 
-  const { rol, username } = req.user;
-  console.log({ rol, username });
+  const { isAdmin, username } = req.user;
+  console.log({ isAdmin, username });
 
-  if (rol !== "ADMIN_ROLE") {
+  if (!isAdmin) {
     return res
       .status(401)
       .json({ msg: `${username} is not the administrator` });
