@@ -8,7 +8,7 @@ interface UserAttributes {
   password: string;
   cellphone: number;
   isActive: boolean;
-  rol: string;
+  isAdmin: boolean;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -19,7 +19,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     password!: string;
     cellphone!: number;
     isActive!: boolean;
-    rol!: string;
+    isAdmin!: boolean;
     static associate(models: any) {
       // define association here
       // Users.hasOne(models.Profile);
@@ -55,14 +55,14 @@ module.exports = (sequelize: any, DataTypes: any) => {
         allowNull: false,
       },
       isActive: {
-        type: DataTypes.STRING,
+        type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: true,
       },
-      rol: {
-        type: DataTypes.ENUM("ADMIN_ROLE", "USER_ROLE"),
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
         allowNull: false,
-        defaultValue: "USER_ROLE",
+        defaultValue: false,
       },
     },
     {
