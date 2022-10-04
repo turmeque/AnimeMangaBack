@@ -11,6 +11,8 @@ interface AnimeAttributes {
   producers:string;
   popularity:number;
   genres:string
+  price: number;
+  
  
 }
 
@@ -26,9 +28,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
     producers!:string;
     popularity!:number;
     genres!:string
+    price!: number;
 
     static associate(models: any) {
        Animes.belongsToMany(models.Genres, { through: 'anime_genre' })
+      Animes.belongsToMany(models.Purchases, { through: 'purchase_anime' })
+
      
     }
   }
@@ -73,6 +78,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
     genres: {
       type: DataTypes.ARRAY(DataTypes.STRING)
 
+    },
+    price: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
     },
   
   }, {

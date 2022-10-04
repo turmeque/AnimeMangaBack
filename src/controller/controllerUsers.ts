@@ -43,7 +43,7 @@ export const getAllUsers = async () => {
   return allUsers;
 };
 
-export const getUserById = async (email: any) => {
+export const getUserEmail = async (email: any) => {
   const user = await db.Users.findOne({ where: { email } });
   return user;
 };
