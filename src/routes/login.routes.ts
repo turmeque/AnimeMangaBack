@@ -29,7 +29,7 @@ server.post("/auth", async (req, res) => {
   }
 });
 
-server.get("/users", auth, async (req, res) => {
+server.get("/users", async (req, res) => {
   try {
     const users = await getAllUsers();
     res.status(200).json(users);
