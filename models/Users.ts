@@ -1,5 +1,5 @@
 "use strict";
-import { Model, UUIDV4 } from "sequelize";
+import { UUIDV4, Model } from "sequelize";
 
 interface UserAttributes {
   id: string;
@@ -7,6 +7,8 @@ interface UserAttributes {
   email: string;
   password: string;
   cellphone: number;
+  isActive: boolean;
+  isAdmin: boolean;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -16,10 +18,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
     email!: string;
     password!: string;
     cellphone!: number;
+    isActive!: boolean;
+    isAdmin!: boolean;
     static associate(models: any) {
       // define association here
       // Users.hasOne(models.Profile);
-      Users.belongsTo(models.Profile);
     }
   }
   Users.init(
@@ -39,6 +42,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isEmail: true,
+        },
       },
       password: {
         type: DataTypes.STRING,
@@ -47,6 +53,16 @@ module.exports = (sequelize: any, DataTypes: any) => {
       cellphone: {
         type: DataTypes.CHAR,
         allowNull: false,
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
+      },
+      isAdmin: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
       },
     },
     {

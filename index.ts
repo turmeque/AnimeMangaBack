@@ -12,7 +12,6 @@ async function getAnimes() {
 
     let animes: any = [];
     try {
-
       const resApi = await axios.get(`${url2}`);
       const resApi2 = await axios.get(`${url}`);
       const resApi3 = await axios.get(`${url3}`);
@@ -130,7 +129,6 @@ async function getAnimes() {
   preCarga()
   getAnimes()
   preCargaTopAnimes()
-
 
 
 
