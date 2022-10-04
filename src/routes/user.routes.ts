@@ -2,7 +2,8 @@ import { Router } from "express";
 import {
   createUser,
   getAllUsers,
-  getUserById,
+  //getUserById,
+  getUserEmail,
 } from "../controller/controllerUsers";
 const server = Router();
 
@@ -25,11 +26,11 @@ server.get("/", async (req, res) => {
   }
 });
 
-server.get("/:id", async (req, res) => {
-  const { id } = req.params;
+server.get("/email", async (req, res) => {
+  const {email}   = req.query;
   try {
-    const user = await getUserById(id);
-    res.status(200).json(user);
+    const user = await getUserEmail(email);
+    res.send({user});
   } catch (error) {
     res.status(400).json({ msg: "Something went  wrong" });
   }
