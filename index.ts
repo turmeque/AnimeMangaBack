@@ -12,10 +12,17 @@ async function getAnimes() {
 
     let animes: any = [];
     try {
+<<<<<<< HEAD
       const resApi = await axios.get(url2);
       const resApi2 = await axios.get(url);
       const resApi3 = await axios.get(url3);
       const resApi4 = await axios.get(url4);
+=======
+      const resApi = await axios.get(`${url2}`);
+      const resApi2 = await axios.get(`${url}`);
+      const resApi3 = await axios.get(`${url3}`);
+      const resApi4 = await axios.get(`${url4}`);
+>>>>>>> 6b076e49e9c17fb0ab8cae031691eb7a143ca4c7
       resApi.data.data.map((a: any) => {
         animes.push({
           title: a.title,
@@ -151,7 +158,6 @@ getAnimes()
 
 
 >>>>>>> 0a723d7f8d7f4e213174baa1afca654583f5675d
-
 
 const port = process.env.PORT || 3000;
 

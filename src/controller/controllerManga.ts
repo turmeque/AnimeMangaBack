@@ -260,6 +260,7 @@ export const getTopManga = async () => {
         score: d.score !== null ? d.score : 5,
         popularity: d.popularity,
         chapters: d.chapters !== null ? d.chapters : 100,
+
         status: d.status,
         synopsis: d.synopsis,
         genres: d.genres
