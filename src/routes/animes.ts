@@ -15,5 +15,8 @@ animes.forNameAndEpisodes
     
 )
 
+router.get('/:id', 
+animes.getAnimeById
+)
 
 module.exports= router
