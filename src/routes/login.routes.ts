@@ -40,6 +40,7 @@ server.post("/auth/google", async (req, res) => {
   const { id_token } = req.body;
   try {
     const newUser = await googleSignIn(id_token);
+    // console.log(newUser);
     res.status(200).json(newUser);
   } catch (error) {
     res.status(400).json({ msg: "Something went wrong", error });

@@ -1,4 +1,5 @@
 require("dotenv").config();
+import { googleVerify } from "../../helpers/google-verify";
 import db from "../../models";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -65,6 +66,14 @@ export const getUserEmail = async (email: any) => {
 };
 
 export const googleSignIn = async (id_token: string) => {
-  if (id_token) return { msg: "Everything Ok", id_token };
+
+  if(id_token){
+    try {
+      const googleUser = await googleVerify(id_token);
+      return googleUser
+    } catch (error) {
+      return {msg: 'token cannot be verified', error}
+    }
+  }
   else return { msg: "id_token is necessary" };
 };
