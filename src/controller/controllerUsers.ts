@@ -64,7 +64,7 @@ export const getUserEmail = async (email: any) => {
   return user;
 };
 
-// export const googleSignIn = async (id_token: string) => {
-//   if (id_token) return { msg: "Everything Ok", id_token };
-//   else return { msg: "id_token is necessary" };
-// };
+export const googleSignIn = async (id_token: string) => {
+  if (id_token) return { msg: "Everything Ok", id_token };
+  else return { msg: "id_token is necessary" };
+};
