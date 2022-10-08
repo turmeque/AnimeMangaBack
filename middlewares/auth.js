@@ -4,7 +4,7 @@ const secret = process.env.SECRET_WORD;
 const { response, request } = require("express");
 import db from "../models";
 const auth = async (req = request, res = response, next) => {
-  // console.log(req.headers);
+  console.log(req.headers);
 
   //check if exists the token
   if (!req.headers.token) {
