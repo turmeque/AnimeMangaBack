@@ -9,7 +9,7 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-
+  const { username,image, email, pass, cellphone } = obj;
   if (!username || !email || !pass || !cellphone) {
     throw "Missing data require to create a new user";
   }
@@ -19,19 +19,11 @@ export const signUp = async (obj: any) => {
   if (exists) return ({ Info: "User already exists" });
 
 
-  if (
-    email === "Jhojangutierrez900@gmail.com" ||
-    email === "xdarcx@hotmail.es" ||
-    email === "p.manolaki95@gmail.com" ||
-    email === "sam.caillat@gmail.com" ||
-    email === "enzoholgadocdb@gmail.com"
-  ) {
-     isAdmin = true
-  }
   const password = bcrypt.hashSync(pass, salt);
 
+  const user = await db.Users.create({ username,image, email, password, cellphone });
 
-  const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+  const token = jwt.sign({ user }, secret, { expiresIn: "1hr" });
 
   return { user, token };
 };
@@ -45,8 +37,8 @@ export const signIn = async (obj: any) => {
     throw "User with this email not found";
   } else {
     if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ user }, secret, { expiresIn: "5h" });
-      return { msg: "The user has been authenticated", user, token };
+      const token = jwt.sign({ user }, secret, { expiresIn: "1hr" });
+      return { user, token };
     } else {
       throw "Invalid password!!";
     }
@@ -63,3 +55,75 @@ export const getUserEmail = async (email: any) => {
   return user;
 };
 
+///-----ruta putUser http://localhost:3000/login/${email}
+
+exports.putUser = async (req:Request,res:Response)=>{
+try {
+  let email = req.params.email;
+  let {username,image,cellphone}=req.body;
+let resDB =  await db.Users.update({username,image,cellphone},
+    { 
+      where:{
+        email,
+      }
+    })
+  
+    res.send(resDB)
+} catch (error) {
+  res.status(400).send("User not update!!")
+}
+
+}
+
+///-----ruta deleteUser http://localhost:3000/login/${email}
+
+exports.deleteUser = async(req:Request,res:Response)=>{
+  try {
+      const email=req.params.email
+      await db.Users.destroy({
+          where:{
+              email,
+          }
+
+      })
+      res.send({info:"User deleted!!"})
+  } catch (error) {
+      res.send({ error:"Can`t delete User"})
+  }
+}
+///-----ruta putUser http://localhost:3000/login/${email}
+
+exports.putUser = async (req:Request,res:Response)=>{
+  try {
+    let email = req.params.email;
+    let {username,image,cellphone}=req.body;
+  let resDB =  await db.Users.update({username,image,cellphone},
+      { 
+        where:{
+          email,
+        }
+      })
+    
+      res.send(resDB)
+  } catch (error) {
+    res.status(400).send("User not update!!")
+  }
+  
+  }
+  
+  ///-----ruta deleteUser http://localhost:3000/login/${email}
+  
+  exports.deleteUser = async(req:Request,res:Response)=>{
+    try {
+        const email=req.params.email
+        await db.Users.destroy({
+            where:{
+                email,
+            }
+  
+        })
+        res.send({info:"User deleted!!"})
+    } catch (error) {
+        res.send({ error:"Can`t delete User"})
+    }
+  }
