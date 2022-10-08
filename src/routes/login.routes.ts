@@ -2,6 +2,7 @@ import { Router } from "express";
 import db from "../../models";
 import isAdminRole from "../../middlewares/validateRoles";
 const auth = require("../../middlewares/auth");
+const  user =require ("../controller/controllerUsers")
 import {
   signUp,
   getAllUsers,
@@ -17,9 +18,9 @@ server.post("/bulk", async (req, res) => {
 });
 
 server.post("/", async (req, res) => {
-  const { username, email, pass, cellphone } = req.body;
+  const { username,image, email, pass, cellphone } = req.body;
   try {
-    const newUser = await signUp({ username, email, pass, cellphone });
+    const newUser = await signUp({ username,image, email, pass, cellphone });
     res.status(200).json(newUser);
   } catch (error) {
     res.status(400).json({ msg: "Something went wrong", error });
@@ -65,5 +66,12 @@ server.get("/:email", async (req, res) => {
     res.status(400).json({ msg: "Something went  wrong" });
   }
 });
+
+server.put("/:email",
+user.putUser)
+
+server.delete("/:email",
+user.deleteUser
+)
 
 export default server;
