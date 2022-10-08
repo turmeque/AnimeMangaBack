@@ -9,10 +9,10 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-    const { username, email, pass, cellphone } = obj;
+    const { username, email, pass, image, google} = obj;
   let isAdmin = false;
 
-  if (!username || !email || !pass || !cellphone) {
+  if (!username || !email || !pass) {
     throw "Missing data require to create a new user";
   }
 
@@ -30,8 +30,9 @@ export const signUp = async (obj: any) => {
     username,
     email,
     password,
-    cellphone,
     isAdmin,
+    image,
+    google
   });
 
 
@@ -45,11 +46,14 @@ export const signIn = async (obj: any) => {
   const user = await db.Users.findOne({
     where: { email },
   });
+  if(!user.isActive) {
+    throw 'talk to admin, user blocked'
+  }
   if (!user) {
     throw "User with this email not found";
   } else {
     if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ user }, secret, { expiresIn: "5h" });
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
       return { msg: "The user has been authenticated", user, token };
     } else {
       throw "Invalid password!!";
@@ -73,7 +77,33 @@ export const googleSignIn = async (id_token: string) => {
   if(id_token){
     try {
       const googleUser = await googleVerify(id_token);
-      return googleUser
+      const {name, picture, email} = googleUser
+      // console.log(email);
+
+      let user = await db.Users.findOne({where: {email}})
+
+
+      if(!user){
+        let data = {
+          username: name,
+          email,
+          image: picture,
+          pass: ':p',
+          google: true
+        }
+        await db.Users.create(data)
+        user = await db.Users.findOne({where: {email}})
+      }
+      if(!user.isActive){
+        throw 'talk to admin, user blocked'
+      }
+
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+      return {
+        msg: "user authenticated successfully with Google", 
+        user, 
+        token }
     } catch (error) {
       return {msg: 'token cannot be verified', error}
     }
