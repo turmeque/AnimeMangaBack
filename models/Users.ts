@@ -2,8 +2,9 @@
 import { UUIDV4, Model } from "sequelize";
 
 interface UserAttributes {
-  id: string;
+  id: number;
   username: string;
+  image:string;
   email: string;
   password: string;
   cellphone: number;
@@ -13,8 +14,9 @@ interface UserAttributes {
 
 module.exports = (sequelize: any, DataTypes: any) => {
   class Users extends Model<UserAttributes> implements UserAttributes {
-    id!: string;
+    id!: number;
     username!: string;
+    image!:string;
     email!: string;
     password!: string;
     cellphone!: number;
@@ -22,21 +24,27 @@ module.exports = (sequelize: any, DataTypes: any) => {
     isAdmin!: boolean;
     static associate(models: any) {
       // define association here
+      Users.belongsToMany(models.AnimeFavorites, { through: 'anime_favorite' })
       // Users.hasOne(models.Profile);
     }
   }
   Users.init(
     {
       id: {
-        type: DataTypes.UUID,
-        defaultValue: UUIDV4,
-        allowNull: false,
-        primaryKey: true,
+        type: DataTypes.INTEGER,
+            autoIncrement: true,
+            primaryKey: true,
+            unique: true
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+      },
+      image:{
+        type:DataTypes.STRING,
+     
+      
       },
       email: {
         type: DataTypes.STRING,
