@@ -1,5 +1,7 @@
 require("dotenv").config();
 import db from "../../models";
+import { Request, Response } from "express";
+import { beforeDestroy } from "../../dist/models/Characters";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -7,11 +9,15 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-  const { username, email, pass, cellphone } = obj;
-  let isAdmin = false;
+
   if (!username || !email || !pass || !cellphone) {
     throw "Missing data require to create a new user";
   }
+  const exists2= await db.Users.findOne({ where: {email: email } });
+  if (exists2) return ({ Info: "Email already exists" });
+  const exists= await db.Users.findOne({ where: { username: username } });
+  if (exists) return ({ Info: "User already exists" });
+
 
   if (
     email === "Jhojangutierrez900@gmail.com" ||
@@ -24,13 +30,6 @@ export const signUp = async (obj: any) => {
   }
   const password = bcrypt.hashSync(pass, salt);
 
-  const user = await db.Users.create({
-    username,
-    email,
-    password,
-    cellphone,
-    isAdmin,
-  });
 
   const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
 
@@ -55,7 +54,7 @@ export const signIn = async (obj: any) => {
 };
 
 export const getAllUsers = async () => {
-  const allUsers = await db.Users.findAll();
+  const allUsers = await db.Users.findAll({include:{model:db.AnimeFavorites}});
   return allUsers;
 };
 
@@ -64,7 +63,3 @@ export const getUserEmail = async (email: any) => {
   return user;
 };
 
-// export const googleSignIn = async (id_token: string) => {
-//   if (id_token) return { msg: "Everything Ok", id_token };
-//   else return { msg: "id_token is necessary" };
-// };
