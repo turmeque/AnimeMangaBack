@@ -1,7 +1,7 @@
 require("dotenv").config();
+import { googleVerify } from "../../helpers/google-verify";
 import db from "../../models";
 import { Request, Response } from "express";
-import { beforeDestroy } from "../../dist/models/Characters";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -69,10 +69,17 @@ export const getUserEmail = async (email: any) => {
 
 
 export const googleSignIn = async (id_token: string) => {
-  if (id_token) return { msg: "Everything Ok", id_token };
+
+  if(id_token){
+    try {
+      const googleUser = await googleVerify(id_token);
+      return googleUser
+    } catch (error) {
+      return {msg: 'token cannot be verified', error}
+    }
+  }
   else return { msg: "id_token is necessary" };
 };
-=======
 
 ///-----ruta putUser http://localhost:3000/login/${email}
 
