@@ -2,7 +2,7 @@ import {Router} from "express"
 import {
   createAnimeFavorite
     
-  } from "../controller/controllerAnimesFavorites";
+  } from "../controller/ControllerAnimesFavorites";
 
 const server = Router();
 
