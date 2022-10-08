@@ -1,5 +1,7 @@
 require("dotenv").config();
 import db from "../../models";
+import { Request, Response } from "express";
+import { beforeDestroy } from "../../dist/models/Characters";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -7,14 +9,19 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-  const { username, email, pass, cellphone } = obj;
+  const { username,image, email, pass, cellphone } = obj;
   if (!username || !email || !pass || !cellphone) {
     throw "Missing data require to create a new user";
   }
+  const exists2= await db.Users.findOne({ where: {email: email } });
+  if (exists2) return ({ Info: "Email already exists" });
+  const exists= await db.Users.findOne({ where: { username: username } });
+  if (exists) return ({ Info: "User already exists" });
+
 
   const password = bcrypt.hashSync(pass, salt);
 
-  const user = await db.Users.create({ username, email, password, cellphone });
+  const user = await db.Users.create({ username,image, email, password, cellphone });
 
   const token = jwt.sign({ user }, secret, { expiresIn: "1hr" });
 
@@ -39,7 +46,7 @@ export const signIn = async (obj: any) => {
 };
 
 export const getAllUsers = async () => {
-  const allUsers = await db.Users.findAll();
+  const allUsers = await db.Users.findAll({include:{model:db.AnimeFavorites}});
   return allUsers;
 };
 
@@ -47,3 +54,40 @@ export const getUserEmail = async (email: any) => {
   const user = await db.Users.findOne({ where: { email } });
   return user;
 };
+
+///-----ruta putUser http://localhost:3000/login/${email}
+
+exports.putUser = async (req:Request,res:Response)=>{
+try {
+  let email = req.params.email;
+  let {username,image,cellphone}=req.body;
+let resDB =  await db.Users.update({username,image,cellphone},
+    { 
+      where:{
+        email,
+      }
+    })
+  
+    res.send(resDB)
+} catch (error) {
+  res.status(400).send("User not update!!")
+}
+
+}
+
+///-----ruta deleteUser http://localhost:3000/login/${email}
+
+exports.deleteUser = async(req:Request,res:Response)=>{
+  try {
+      const email=req.params.email
+      await db.Users.destroy({
+          where:{
+              email,
+          }
+
+      })
+      res.send({info:"User deleted!!"})
+  } catch (error) {
+      res.send({ error:"Can`t delete User"})
+  }
+}
