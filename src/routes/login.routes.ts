@@ -1,4 +1,5 @@
 import { Router } from "express";
+import db from "../../models";
 import isAdminRole from "../../middlewares/validateRoles";
 const auth = require("../../middlewares/auth");
 const  user =require ("../controller/controllerUsers")
@@ -7,9 +8,14 @@ import {
   getAllUsers,
   getUserEmail,
   signIn,
-  
+
 } from "../controller/controllerUsers";
 const server = Router();
+
+server.post("/bulk", async (req, res) => {
+  const users = await db.Users.bulkCreate(req.body);
+  res.send(users);
+});
 
 server.post("/", async (req, res) => {
   const { username,image, email, pass, cellphone } = req.body;
@@ -31,7 +37,17 @@ server.post("/auth", async (req, res) => {
   }
 });
 
-server.get("/users", async (req, res) => {
+// server.post("/auth/google", async (req, res) => {
+//   const { id_token } = req.body;
+//   try {
+//     const newUser = await googleSignIn(id_token);
+//     res.status(200).json(newUser);
+//   } catch (error) {
+//     res.status(400).json({ msg: "Something went wrong", error });
+//   }
+// });
+
+server.get("/users", auth, isAdminRole, async (req, res) => {
   try {
     const users = await getAllUsers();
     res.status(200).json(users);
