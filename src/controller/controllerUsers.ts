@@ -1,7 +1,7 @@
 require("dotenv").config();
+import { googleVerify } from "../../helpers/google-verify";
 import db from "../../models";
 import { Request, Response } from "express";
-import { beforeDestroy } from "../../dist/models/Characters";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -9,17 +9,12 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-    const { username, email, pass, cellphone } = obj;
+    const { username, email, pass, image, google} = obj;
   let isAdmin = false;
 
-  if (!username || !email || !pass || !cellphone) {
+  if (!username || !email || !pass) {
     throw "Missing data require to create a new user";
   }
-  const exists2= await db.Users.findOne({ where: {email: email } });
-  if (exists2) return ({ Info: "Email already exists" });
-  const exists= await db.Users.findOne({ where: { username: username } });
-  if (exists) return ({ Info: "User already exists" });
-
 
   if (
     email === "Jhojangutierrez900@gmail.com" ||
@@ -35,8 +30,9 @@ export const signUp = async (obj: any) => {
     username,
     email,
     password,
-    cellphone,
     isAdmin,
+    image,
+    google
   });
 
 
@@ -50,11 +46,14 @@ export const signIn = async (obj: any) => {
   const user = await db.Users.findOne({
     where: { email },
   });
+  if(!user.isActive) {
+    throw 'talk to admin, user blocked'
+  }
   if (!user) {
     throw "User with this email not found";
   } else {
     if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ user }, secret, { expiresIn: "5h" });
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
       return { msg: "The user has been authenticated", user, token };
     } else {
       throw "Invalid password!!";
@@ -72,6 +71,45 @@ export const getUserEmail = async (email: any) => {
   return user;
 };
 
+
+export const googleSignIn = async (id_token: string) => {
+
+  if(id_token){
+    try {
+      const googleUser = await googleVerify(id_token);
+      const {name, picture, email} = googleUser
+      // console.log(email);
+
+      let user = await db.Users.findOne({where: {email}})
+
+
+      if(!user){
+        let data = {
+          username: name,
+          email,
+          image: picture,
+          pass: ':p',
+          google: true
+        }
+        await db.Users.create(data)
+        user = await db.Users.findOne({where: {email}})
+      }
+      if(!user.isActive){
+        throw 'talk to admin, user blocked'
+      }
+
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+      return {
+        msg: "user authenticated successfully with Google", 
+        user, 
+        token }
+    } catch (error) {
+      return {msg: 'token cannot be verified', error}
+    }
+  }
+  else return { msg: "id_token is necessary" };
+};
 
 ///-----ruta putUser http://localhost:3000/login/${email}
 
