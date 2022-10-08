@@ -15,11 +15,6 @@ export const signUp = async (obj: any) => {
   if (!username || !email || !pass || !cellphone) {
     throw "Missing data require to create a new user";
   }
-  const exists2= await db.Users.findOne({ where: {email: email } });
-  if (exists2) return ({ Info: "Email already exists" });
-  const exists= await db.Users.findOne({ where: { username: username } });
-  if (exists) return ({ Info: "User already exists" });
-
 
   if (
     email === "Jhojangutierrez900@gmail.com" ||
@@ -72,6 +67,12 @@ export const getUserEmail = async (email: any) => {
   return user;
 };
 
+
+export const googleSignIn = async (id_token: string) => {
+  if (id_token) return { msg: "Everything Ok", id_token };
+  else return { msg: "id_token is necessary" };
+};
+=======
 
 ///-----ruta putUser http://localhost:3000/login/${email}
 

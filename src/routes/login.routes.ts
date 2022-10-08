@@ -8,7 +8,8 @@ import {
   getAllUsers,
   getUserEmail,
   signIn,
-
+  googleSignIn,
+=======
 } from "../controller/controllerUsers";
 const server = Router();
 
@@ -37,15 +38,15 @@ server.post("/auth", async (req, res) => {
   }
 });
 
-// server.post("/auth/google", async (req, res) => {
-//   const { id_token } = req.body;
-//   try {
-//     const newUser = await googleSignIn(id_token);
-//     res.status(200).json(newUser);
-//   } catch (error) {
-//     res.status(400).json({ msg: "Something went wrong", error });
-//   }
-// });
+server.post("/auth/google", async (req, res) => {
+  const { id_token } = req.body;
+  try {
+    const newUser = await googleSignIn(id_token);
+    res.status(200).json(newUser);
+  } catch (error) {
+    res.status(400).json({ msg: "Something went wrong", error });
+  }
+});
 
 server.get("/users", auth, isAdminRole, async (req, res) => {
   try {
