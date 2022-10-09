@@ -5,7 +5,7 @@ import db from "../../models";
 import {Op} from 'sequelize'
 
 
-// ruta createAnimeFavorites---http://localhost:3000/animeFavorite--//
+// ruta createAnimeFavorites---http://localhost:3000/animeFavorites----//
 
 
 export const createAnimeFavorite= async (obj: any) => {
