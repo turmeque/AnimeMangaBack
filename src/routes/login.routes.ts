@@ -19,11 +19,12 @@ server.post("/bulk", async (req, res) => {
 
 server.post("/", async (req, res) => {
   const { username,image, email, pass, cellphone } = req.body;
+  
   try {
     const newUser = await signUp({ username,image, email, pass, cellphone });
     res.status(200).json(newUser);
   } catch (error) {
-    res.status(400).json({ msg: "Something went wrong", error });
+    res.status(400).json(error);
   }
 });
 
@@ -33,7 +34,7 @@ server.post("/auth", async (req, res) => {
     const resp = await signIn({ email, password });
     res.status(200).json(resp);
   } catch (error) {
-    res.status(400).json({ msg: "Something went wrong", error });
+    res.status(400).json(error);
   }
 });
 
