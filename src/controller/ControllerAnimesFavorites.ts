@@ -10,12 +10,12 @@ import {Op} from 'sequelize'
 
 export const createAnimeFavorite= async (obj: any) => {
     
-    const { title,image,trailer,release,rating,description,producers,genres,price,user } = obj;
+    const { title,image,trailer,release,rating,description,producers,popularity,genres,price,user } = obj;
 
     const exists= await db.AnimeFavorites.findOne({ where: { title: title } });
     if (exists) return ({ Info: "Anime already exists" });
    
- const fv = await db.AnimeFavorites.create({ title,image,trailer,release,rating,description,producers,genres,price });
+ const fv = await db.AnimeFavorites.create({ title,image,trailer,release,rating,description,producers,popularity,genres,price });
 
     user.forEach(async (element:any) => {
       const found = await db.Users.findByPk(element);

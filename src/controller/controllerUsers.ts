@@ -67,7 +67,7 @@ export const getAllUsers = async () => {
 };
 
 export const getUserEmail = async (email: any) => {
-  const user = await db.Users.findOne({include:{model:db.AnimeFavorites, attributes: ['id', 'title', 'image', 'release', 'rating',"description","producers","popularity","genres","price"]}});
+  const user = await db.Users.findOne({where:{email},include:{model:db.AnimeFavorites}});
   return user;
 };
 
