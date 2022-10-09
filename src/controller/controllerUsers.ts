@@ -1,7 +1,7 @@
 require("dotenv").config();
+import { googleVerify } from "../../helpers/google-verify";
 import db from "../../models";
-import { Request, Response } from "express";
-import { beforeDestroy } from "../../dist/models/Characters";
+import { Request, response, Response } from "express";
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const saltRounds = Number(process.env.SALT_ROUNDS);
@@ -9,12 +9,21 @@ const secret = process.env.SECRET_WORD;
 const salt = bcrypt.genSaltSync(saltRounds);
 
 export const signUp = async (obj: any) => {
-    const { username, email, pass, cellphone } = obj;
+  const { username, email, pass, image, google } = obj;
   let isAdmin = false;
 
-  if (!username || !email || !pass || !cellphone) {
+  const userExist = await db.Users.findOne({ where: { username } });
+  const emailExist = await db.Users.findOne({ where: { email } });
+  const userGoogle = await db.Users.findOne({ where: { email } });
+  console.log(userGoogle.google);
+
+  if (userExist) throw "This username is not available";
+  if (userGoogle.google === true)
+    throw "you need to log in with google, your count already exists";
+  if (emailExist) throw "this email is already registered";
+
+  if (!username || !email || !pass)
     throw "Missing data require to create a new user";
-  }
 
   if (
     email === "Jhojangutierrez900@gmail.com" ||
@@ -23,21 +32,21 @@ export const signUp = async (obj: any) => {
     email === "sam.caillat@gmail.com" ||
     email === "enzoholgadocdb@gmail.com"
   ) {
-     isAdmin = true
+    isAdmin = true;
   }
   const password = bcrypt.hashSync(pass, salt);
   const user = await db.Users.create({
     username,
     email,
     password,
-    cellphone,
     isAdmin,
+    image,
+    google,
   });
-
 
   const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
 
-  return { user, token };
+  return { user, token, msg: "you have successfully registered" };
 };
 
 export const signIn = async (obj: any) => {
@@ -45,11 +54,17 @@ export const signIn = async (obj: any) => {
   const user = await db.Users.findOne({
     where: { email },
   });
+
+  // if(!user.isActive) {
+  //   throw 'talk to admin, user blocked'
+  // }
   if (!user) {
     throw "User with this email not found";
+  } else if (!user.isActive) {
+    throw "talk to admin, user blocked";
   } else {
     if (bcrypt.compareSync(password, user.password)) {
-      const token = jwt.sign({ user }, secret, { expiresIn: "5h" });
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
       return { msg: "The user has been authenticated", user, token };
     } else {
       throw "Invalid password!!";
@@ -58,56 +73,90 @@ export const signIn = async (obj: any) => {
 };
 
 export const getAllUsers = async () => {
-  const allUsers = await db.Users.findAll({include:{model:db.AnimeFavorites}});
+  const allUsers = await db.Users.findAll({
+    include: { model: db.AnimeFavorites },
+  });
   return allUsers;
 };
 
 export const getUserEmail = async (email: any) => {
-  const user = await db.Users.findOne({ where: { email } });
+  const user = await db.Users.findOne({
+    where: { email },
+    include: { model: db.AnimeFavorites },
+  });
   return user;
 };
 
-
 export const googleSignIn = async (id_token: string) => {
-  if (id_token) return { msg: "Everything Ok", id_token };
-  else return { msg: "id_token is necessary" };
+  if (id_token) {
+    try {
+      const googleUser = await googleVerify(id_token);
+      const { name, picture, email } = googleUser;
+      // console.log(email);
+
+      let user = await db.Users.findOne({ where: { email } });
+
+      if (!user) {
+        let data = {
+          username: name,
+          email,
+          image: picture,
+          pass: ":p",
+          google: true,
+        };
+        await db.Users.create(data);
+        user = await db.Users.findOne({ where: { email } });
+      }
+      if (!user.isActive) {
+        throw "talk to admin, user blocked";
+      }
+
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+      return {
+        msg: "user authenticated successfully with Google",
+        user,
+        token,
+      };
+    } catch (error) {
+      return { msg: "token cannot be verified", error };
+    }
+  } else return { msg: "id_token is necessary" };
 };
-=======
 
 ///-----ruta putUser http://localhost:3000/login/${email}
 
-     exports.putUser = async (req:Request,res:Response)=>{
-      try {
-        let email = req.params.email;
-        let {username,image,cellphone}=req.body;
-      let resDB =  await db.Users.update({username,image,cellphone},
-          { 
-            where:{
-              email,
-            }
-          })
-        
-          res.send(resDB)
-      } catch (error) {
-        res.status(400).send("User not update!!")
+exports.putUser = async (req: Request, res: Response) => {
+  try {
+    let email = req.params.email;
+    let { username, image, cellphone } = req.body;
+    let resDB = await db.Users.update(
+      { username, image, cellphone },
+      {
+        where: {
+          email,
+        },
       }
-      
-      }
-      
-      ///-----ruta deleteUser http://localhost:3000/login/${email}
-      
-      exports.deleteUser = async(req:Request,res:Response)=>{
-        try {
-            const email=req.params.email
-            await db.Users.destroy({
-                where:{
-                    email,
-                }
-      
-            })
-            res.send({info:"User deleted!!"})
-        } catch (error) {
-            res.send({ error:"Can`t delete User"})
-        }
-      }
+    );
 
+    res.send("hola");
+  } catch (error) {
+    res.status(400).send("User not update!!");
+  }
+};
+
+///-----ruta deleteUser http://localhost:3000/login/${email}
+
+exports.deleteUser = async (req: Request, res: Response) => {
+  try {
+    const email = req.params.email;
+    await db.Users.destroy({
+      where: {
+        email,
+      },
+    });
+    res.send({ info: "User deleted!!" });
+  } catch (error) {
+    res.send({ error: "Can`t delete User" });
+  }
+};

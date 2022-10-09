@@ -222,7 +222,7 @@ export const getMangaById = async (id: any) => {
       status: d.status,
       synopsis: d.synopsis,
       genres: d.genres.map((d: { name: any; type: any }) => d.name).join(", "),
-      price: d.score + 50,
+      price: 4.99,
     };
     return manga;
   }
@@ -266,7 +266,7 @@ export const getTopManga = async () => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
-          price: d.score + 50,
+          price: 4.99,
       };
     }
   );
