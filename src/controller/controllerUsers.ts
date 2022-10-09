@@ -67,7 +67,7 @@ export const getAllUsers = async () => {
 };
 
 export const getUserEmail = async (email: any) => {
-  const user = await db.Users.findOne({ where: { email } });
+  const user = await db.Users.findOne({where:{email},include:{model:db.AnimeFavorites}});
   return user;
 };
 
@@ -124,7 +124,7 @@ export const googleSignIn = async (id_token: string) => {
             }
           })
         
-          res.send(resDB)
+          res.send("hola")
       } catch (error) {
         res.status(400).send("User not update!!")
       }

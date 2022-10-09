@@ -31,7 +31,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price!: number;
 
     static associate(models: any) {
-      //  AnimeFavorites.belongsToMany(models.Users, { through: 'anime_favorite' })
+        AnimeFavorites.belongsToMany(models.Users, { through: 'anime_favorite' })
      // Animes.belongsToMany(models.Purchases, { through: 'purchase_anime' })
 
      
