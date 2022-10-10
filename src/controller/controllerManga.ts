@@ -354,6 +354,7 @@ export const searchByName = async (name: any) => {
         genres: d.genres
           .map((d: { name: any; type: any }) => d.name)
           .join(", "),
+        price: 4.99
          
       };
     }
