@@ -26,7 +26,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     google!: boolean
     static associate(models: any) {
       // define association here
-       Users.belongsToMany(models.AnimeFavorites, { through: 'anime_favorite' })
+      //  Users.belongsToMany(models.AnimeFavorites, { through: 'anime_favorite' })
        Users.hasMany(models.Purchases)
       // Users.hasOne(models.Profile);
     }
