@@ -18,13 +18,17 @@ server.post("/bulk", async (req, res) => {
 });
 
 server.post("/", async (req, res) => {
-  const { username,image, email, pass, cellphone } = req.body;
-  
+  const { username, email, pass } = req.body;
+  // console.log(req.body);
+
+  const google = false
+  const image = "https://images.unsplash.com/photo-1634034379073-f689b460a3fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
+
   try {
-    const newUser = await signUp({ username,image, email, pass, cellphone });
+    const newUser = await signUp({username, email, pass, google, image });
     res.status(200).json(newUser);
   } catch (error) {
-    res.status(400).json(error);
+    res.status(400).json({msg: "something went wrong" ,error});
   }
 });
 

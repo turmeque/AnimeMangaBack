@@ -12,16 +12,6 @@ export const signUp = async (obj: any) => {
   const { username, email, pass, image, google } = obj;
   let isAdmin = false;
 
-  const userExist = await db.Users.findOne({ where: { username } });
-  const emailExist = await db.Users.findOne({ where: { email } });
-  const userGoogle = await db.Users.findOne({ where: { email } });
-  console.log(userGoogle.google);
-
-  if (userExist) throw "This username is not available";
-  if (userGoogle.google === true)
-    throw "you need to log in with google, your count already exists";
-  if (emailExist) throw "this email is already registered";
-
   if (!username || !email || !pass)
     throw "Missing data require to create a new user";
 
@@ -34,19 +24,30 @@ export const signUp = async (obj: any) => {
   ) {
     isAdmin = true;
   }
-  const password = bcrypt.hashSync(pass, salt);
-  const user = await db.Users.create({
-    username,
-    email,
-    password,
-    isAdmin,
-    image,
-    google,
-  });
 
-  const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+  const userExist = await db.Users.findOne({ where: { username } });
+  const emailExist = await db.Users.findOne({ where: { email } });
+  // const userGoogle = await db.Users.findOne({ where: { email } });
+  if (userExist === null) {
+    if (emailExist.google === true)
+      throw "you need to log in with google, your count already exists";
+    else if (emailExist) throw "this email is already registered";
+    const password = bcrypt.hashSync(pass, salt);
+    const user = await db.Users.create({
+      username,
+      email,
+      password,
+      isAdmin,
+      image,
+      google,
+    });
 
-  return { user, token, msg: "you have successfully registered" };
+    const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+    return { user, token, msg: "you have successfully registered" };
+  } else if (userExist) {
+    throw "This username is not available";
+  }
 };
 
 export const signIn = async (obj: any) => {
