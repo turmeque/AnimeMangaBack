@@ -28,10 +28,7 @@ export const signUp = async (obj: any) => {
   const userExist = await db.Users.findOne({ where: { username } });
   const emailExist = await db.Users.findOne({ where: { email } });
   // const userGoogle = await db.Users.findOne({ where: { email } });
-  if (userExist === null) {
-    if (emailExist.google === true)
-      throw "you need to log in with google, your count already exists";
-    else if (emailExist) throw "this email is already registered";
+  if (userExist === null && emailExist === null) {
     const password = bcrypt.hashSync(pass, salt);
     const user = await db.Users.create({
       username,
@@ -45,9 +42,11 @@ export const signUp = async (obj: any) => {
     const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
 
     return { user, token, msg: "you have successfully registered" };
-  } else if (userExist) {
-    throw "This username is not available";
-  }
+  } else if (userExist === null && emailExist.google === true) {
+    throw "you need to log in with google, your count already exists";
+  } else if (userExist === null && emailExist)
+    throw "this email is already registered";
+  else if (userExist) throw "This username is not available";
 };
 
 export const signIn = async (obj: any) => {
