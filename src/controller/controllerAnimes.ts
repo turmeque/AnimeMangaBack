@@ -3,7 +3,7 @@ import axios from "axios"
 import { Request, Response } from "express";
 import db from "../../models";
 
-import {Op} from 'sequelize'
+
 
 
 // ruta animesDB---http://localhost:3000/animes--//
