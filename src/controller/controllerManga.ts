@@ -51,7 +51,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-          price: d.score + 50,
+          price: 4.99
         };
       }
     );
@@ -89,7 +89,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-            price: d.score + 50,
+            price: 4.99
         };
       }
     );
@@ -127,7 +127,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-            price: d.score + 50,
+            price: 4.99
         };
       }
     );
@@ -165,7 +165,7 @@ export const getMangas = async () => {
           genres: d.genres
             .map((d: { name: any; type: any }) => d.name)
             .join(", "),
-            price: d.score + 50,
+            price: 4.99
         };
       }
     );
@@ -260,6 +260,7 @@ export const getTopManga = async () => {
         score: d.score !== null ? d.score : 5,
         popularity: d.popularity,
         chapters: d.chapters !== null ? d.chapters : 100,
+
         status: d.status,
         synopsis: d.synopsis,
         genres: d.genres

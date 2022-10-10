@@ -1,7 +1,9 @@
 import express from "express";
 import routes from "./src/routes/index";
 const morgan = require("morgan");
-//import cookieParser from 'cookie-parser';
+import cookieParser from "cookie-parser";
+const session = require("express-session");
+const passport = require("passport");
 import bodyParser from "body-parser";
 // import { dotenv } from "dotenv";
 //import  cloudinary  from './config/utils';
@@ -20,7 +22,17 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 app.use(bodyParser.json({ limit: "50mb" }));
-//app.use(cookieParser());
+app.use(express.static("public"));
+// app.use(cookieParser("my super ultra secret"));
+// app.use(
+//   session({
+//     secret: "my super ultra secret",
+//     resave: true,
+//     saveUninitialized: true,
+//   })
+// );
+// app.use(passport.initialized());
+// app.use(passport.session());
 
 app.use(morgan("dev"));
 app.use((req, res, next) => {

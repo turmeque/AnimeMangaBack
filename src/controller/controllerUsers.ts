@@ -1,34 +1,150 @@
 require("dotenv").config();
-import axios from "axios";
-import { User } from "oidc-client";
+import { googleVerify } from "../../helpers/google-verify";
 import db from "../../models";
-//import { users } from "../../seeders/users";
+import { Request, Response } from "express";
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const saltRounds = Number(process.env.SALT_ROUNDS);
+const secret = process.env.SECRET_WORD;
+const salt = bcrypt.genSaltSync(saltRounds);
 
-export const createUser = async (obj: any) => {
-  const { username, email, password, cellphone } = obj;
-  
-  
-  const exists= await db.Users.findOne({ where: { username: username } });
-        if (exists) 
-        return ({ Info: "User already exists" });
-  
-        if (!username || !email || !password || !cellphone) {
+export const signUp = async (obj: any) => {
+    const { username, email, pass, image, google} = obj;
+  let isAdmin = false;
+
+  if (!username || !email || !pass) {
     throw "Missing data require to create a new user";
   }
-  const profile = await db.Profile.create({ username });
-  const profile_id = profile.id;
-  // console.log(profile_id);
-  const newUser = await db.Users.create(obj);
-  newUser.setProfile(profile_id);
-  return newUser;
+
+  if (
+    email === "Jhojangutierrez900@gmail.com" ||
+    email === "xdarcx@hotmail.es" ||
+    email === "p.manolaki95@gmail.com" ||
+    email === "sam.caillat@gmail.com" ||
+    email === "enzoholgadocdb@gmail.com"
+  ) {
+     isAdmin = true
+  }
+  const password = bcrypt.hashSync(pass, salt);
+  const user = await db.Users.create({
+    username,
+    email,
+    password,
+    isAdmin,
+    image,
+    google
+  });
+
+
+  const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+  return { user, token };
+};
+
+export const signIn = async (obj: any) => {
+  const { email, password } = obj;
+  const user = await db.Users.findOne({
+    where: { email },
+  });
+  if(!user.isActive) {
+    throw 'talk to admin, user blocked'
+  }
+  if (!user) {
+    throw "User with this email not found";
+  } else {
+    if (bcrypt.compareSync(password, user.password)) {
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+      return { msg: "The user has been authenticated", user, token };
+    } else {
+      throw "Invalid password!!";
+    }
+  }
 };
 
 export const getAllUsers = async () => {
-  const allUsers = await db.Users.findAll();
+  const allUsers = await db.Users.findAll({include:{model:db.AnimeFavorites}});
   return allUsers;
 };
 
-export const getUserById = async (id: any) => {
-  const user = await db.Users.findByPk(id);
+export const getUserEmail = async (email: any) => {
+  const user = await db.Users.findOne({where:{email},include:{model:db.AnimeFavorites}});
   return user;
 };
+
+
+export const googleSignIn = async (id_token: string) => {
+
+  if(id_token){
+    try {
+      const googleUser = await googleVerify(id_token);
+      const {name, picture, email} = googleUser
+      // console.log(email);
+
+      let user = await db.Users.findOne({where: {email}})
+
+
+      if(!user){
+        let data = {
+          username: name,
+          email,
+          image: picture,
+          pass: ':p',
+          google: true
+        }
+        await db.Users.create(data)
+        user = await db.Users.findOne({where: {email}})
+      }
+      if(!user.isActive){
+        throw 'talk to admin, user blocked'
+      }
+
+      const token = jwt.sign({ user }, secret, { expiresIn: "1h" });
+
+      return {
+        msg: "user authenticated successfully with Google", 
+        user, 
+        token }
+    } catch (error) {
+      return {msg: 'token cannot be verified', error}
+    }
+  }
+  else return { msg: "id_token is necessary" };
+};
+
+///-----ruta putUser http://localhost:3000/login/${email}
+
+     exports.putUser = async (req:Request,res:Response)=>{
+      try {
+        let email = req.params.email;
+        let {username,image,cellphone}=req.body;
+      let resDB =  await db.Users.update({username,image,cellphone},
+          { 
+            where:{
+              email,
+            }
+          })
+        
+          res.send("hola")
+      } catch (error) {
+        res.status(400).send("User not update!!")
+      }
+      
+      }
+      
+      ///-----ruta deleteUser http://localhost:3000/login/${email}
+      
+      exports.deleteUser = async(req:Request,res:Response)=>{
+        try {
+            const email=req.params.email
+            await db.Users.destroy({
+                where:{
+                    email,
+                }
+      
+            })
+            res.send({info:"User deleted!!"})
+        } catch (error) {
+            res.send({ error:"Can`t delete User"})
+        }
+      }
+

@@ -56,5 +56,13 @@ exports.forNameAndEpisodes = async (req:Request,res:Response)=>{
       }
 }
 
-
+exports.getAnimeById = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+      const animeById = await db.Animes.findOne({ where: { id: id } });
+      res.send(animeById);
+    } catch (err) {
+      throw new Error(err);
+    }
+  };
 
