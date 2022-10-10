@@ -89,10 +89,21 @@ export const getUserEmail = async (email: any) => {
 
 export const googleSignIn = async (id_token: string) => {
   if (id_token) {
+    let isAdmin = false;
     try {
       const googleUser = await googleVerify(id_token);
       const { name, picture, email } = googleUser;
+
       // console.log(email);
+      if (
+        email === "Jhojangutierrez900@gmail.com" ||
+        email === "xdarcx@hotmail.es" ||
+        email === "p.manolaki95@gmail.com" ||
+        email === "sam.caillat@gmail.com" ||
+        email === "enzoholgadocdb@gmail.com"
+      ) {
+        isAdmin = true;
+      }
 
       let user = await db.Users.findOne({ where: { email } });
 
@@ -103,6 +114,7 @@ export const googleSignIn = async (id_token: string) => {
           image: picture,
           pass: ":p",
           google: true,
+          isAdmin,
         };
         await db.Users.create(data);
         user = await db.Users.findOne({ where: { email } });

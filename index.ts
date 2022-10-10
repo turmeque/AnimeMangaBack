@@ -88,21 +88,19 @@ async function getAnimes() {
   }
 }
 
+function preCarga() {
+  axios.get(`https://api.jikan.moe/v4/genres/anime`).then((res) => {
+    let resApi = res.data.data.map((G: any) => {
+      const obj = {
+        name: G.name,
+      };
+      return obj;
+    });
+    db.Genres.bulkCreate(resApi);
+    return { msg: "Genres Creados en db" };
+  });
+}
 
- function preCarga(){
- 
-    axios.get (`https://api.jikan.moe/v4/genres/anime`).then((res)=>{
-      let resApi = res.data.data.map((G:any)=>{
-  const  obj = {
-   name:G.name
-  }
-  return obj;
-  })
-  db.Genres.bulkCreate(resApi)
-  return { msg: "Genres Creados en db" }
-    })
-  }
-  
 async function preCargaTopAnimes() {
   let top: any = [];
   let api = await axios.get(`https://api.jikan.moe/v4/top/anime`);
@@ -127,11 +125,11 @@ async function preCargaTopAnimes() {
 
 preCarga();
 getAnimes();
-preCargaTopAnimes();
+// preCargaTopAnimes();
 
 const port = process.env.PORT || 3000;
 
-db.sequelize.sync({ force: false}).then(async () => {
+db.sequelize.sync({ force: true }).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
