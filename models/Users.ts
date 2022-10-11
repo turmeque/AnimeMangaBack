@@ -4,29 +4,30 @@ import { UUIDV4, Model } from "sequelize";
 interface UserAttributes {
   id: number;
   username: string;
-  image:string;
+  image: string;
   email: string;
   password: string;
   cellphone: number;
   isActive: boolean;
   isAdmin: boolean;
-  google: boolean
+  google: boolean;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
   class Users extends Model<UserAttributes> implements UserAttributes {
     id!: number;
     username!: string;
-    image!:string;
+    image!: string;
     email!: string;
     password!: string;
     cellphone!: number;
     isActive!: boolean;
     isAdmin!: boolean;
-    google!: boolean
+    google!: boolean;
     static associate(models: any) {
       // define association here
-       Users.belongsToMany(models.AnimeFavorites, { through: 'anime_favorite' })
+      Users.belongsToMany(models.AnimeFavorites, { through: "anime_favorite" });
+      Users.hasMany(models.Purchases);
       // Users.hasOne(models.Profile);
     }
   }
@@ -34,19 +35,19 @@ module.exports = (sequelize: any, DataTypes: any) => {
     {
       id: {
         type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-            unique: true
+        autoIncrement: true,
+        primaryKey: true,
+        unique: true,
       },
       username: {
         type: DataTypes.STRING,
         allowNull: false,
         unique: true,
       },
-      image:{
-        type:DataTypes.STRING,
-        defaultValue: "https://images.unsplash.com/photo-1634034379073-f689b460a3fc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-      
+      image: {
+        type: DataTypes.STRING,
+        defaultValue:
+          "https://us.123rf.com/450wm/thesomeday123/thesomeday1231712/thesomeday123171200009/91087331-icono-de-perfil-de-avatar-predeterminado-para-hombre-marcador-de-posici%C3%B3n-de-foto-gris-vector-de-ilu.jpg?ver=6",
       },
       email: {
         type: DataTypes.STRING,
@@ -75,8 +76,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
       },
       google: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
-      }
+        defaultValue: false,
+      },
     },
     {
       sequelize,

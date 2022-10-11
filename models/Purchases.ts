@@ -20,6 +20,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
       // define association here
       Purchases.belongsToMany(models.Manga, { through: "purchase_manga" });
       Purchases.belongsToMany(models.Animes, { through: "purchase_anime" });
+      Purchases.belongsTo(models.Users, {foreignKey: "userId"})
 
     }
   }
