@@ -2,7 +2,7 @@ import { Router } from "express";
 import db from "../../models";
 import isAdminRole from "../../middlewares/validateRoles";
 const auth = require("../../middlewares/auth");
-const  user =require ("../controller/controllerUsers")
+const user = require("../controller/controllerUsers");
 import {
   signUp,
   getAllUsers,
@@ -18,12 +18,18 @@ server.post("/bulk", async (req, res) => {
 });
 
 server.post("/", async (req, res) => {
-  const { username,image, email, pass, cellphone } = req.body;
+  const { username, email, pass } = req.body;
+  // console.log(req.body);
+
+  const google = false;
+  const image =
+    "https://us.123rf.com/450wm/thesomeday123/thesomeday1231712/thesomeday123171200009/91087331-icono-de-perfil-de-avatar-predeterminado-para-hombre-marcador-de-posici%C3%B3n-de-foto-gris-vector-de-ilu.jpg?ver=6";
+
   try {
-    const newUser = await signUp({ username,image, email, pass, cellphone });
+    const newUser = await signUp({ username, email, pass, google, image });
     res.status(200).json(newUser);
   } catch (error) {
-    res.status(400).json({ msg: "Something went wrong", error });
+    res.status(400).json({ msg: "something went wrong", error });
   }
 });
 
@@ -33,7 +39,7 @@ server.post("/auth", async (req, res) => {
     const resp = await signIn({ email, password });
     res.status(200).json(resp);
   } catch (error) {
-    res.status(400).json({ msg: "Something went wrong", error });
+    res.status(400).json(error);
   }
 });
 
@@ -67,11 +73,8 @@ server.get("/:email", async (req, res) => {
   }
 });
 
-server.put("/:email",
-user.putUser)
+server.put("/:email", user.putUser);
 
-server.delete("/:email",
-user.deleteUser
-)
+server.delete("/:email", user.deleteUser);
 
 export default server;
