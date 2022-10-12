@@ -33,6 +33,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price!: number;
     static associate(models: any) {
       Manga.belongsToMany(models.Purchases, { through: 'purchase_manga' })
+      Manga.belongsToMany(models.Cart, { through: "cartManga" });
      
     }
   }
