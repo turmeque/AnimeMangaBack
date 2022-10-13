@@ -6,6 +6,7 @@ module.exports = {
     database: process.env.DB_NAME || "Anime",
     host: process.env.DB_HOST || "localhost",
     username: process.env.DB_USER || "postgres",
+    "port": 5432,
     dialect: "postgres",
     logging: false,
   },
