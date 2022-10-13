@@ -1,5 +1,5 @@
 const {Router} = require ("express");
-const animes = require("../controller/ControllerAnimes")
+const animes = require("../controller/controllerAnimes")
 
 const router = Router();
 
