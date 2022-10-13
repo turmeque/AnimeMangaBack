@@ -11,8 +11,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     amount!: number;
 
     static associate(models: any) {
-      Cart.belongsToMany(models.Animes, { through: "cartAnime" });
-      Cart.belongsToMany(models.Manga, { through: "cartManga" });
+      Cart.belongsTo(models.Animes);
+      Cart.belongsTo(models.Manga);
       Cart.belongsTo(models.Users)
     }
   }
@@ -32,6 +32,12 @@ module.exports = (sequelize: any, DataTypes: any) => {
       totalPrice: {
         type: DataTypes.FLOAT,
         allowNull: false,
+      },
+      AnimeId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: 'Animes', // <<< Note, its table's name, not object name
+        referencesKey: 'id'
       }
     },
     {
