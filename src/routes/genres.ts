@@ -1,6 +1,6 @@
 import {Router} from "express"
 
-const genres = require("../controller/ControllerGenres")
+const genres = require("../controller/controllerGenres")
 
 const router = Router();
 
