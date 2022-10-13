@@ -1,4 +1,5 @@
 import { DataTypes, Model, Sequelize } from "sequelize";
+import db from ".";
 
 interface CartAttributes {
   id: string;
@@ -11,9 +12,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
     amount!: number;
 
     static associate(models: any) {
-      Cart.belongsTo(models.Animes);
-      Cart.belongsTo(models.Manga);
-      Cart.belongsTo(models.Users)
+      Cart.belongsTo(models.Animes, { foreignKey: "AnimeId" });
+      Cart.belongsTo(models.Manga, { foreignKey: "MangaId" });
+      Cart.belongsTo(models.Users);
     }
   }
 
@@ -27,7 +28,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
       },
       amount: {
         type: DataTypes.INTEGER,
-        allowNull: false
+        allowNull: false,
       },
       totalPrice: {
         type: DataTypes.FLOAT,
@@ -36,11 +37,21 @@ module.exports = (sequelize: any, DataTypes: any) => {
       AnimeId: {
         type: DataTypes.INTEGER,
         allowNull: true,
-        references: 'Animes', // <<< Note, its table's name, not object name
-        referencesKey: 'id'
-      }
+        references: {
+          model: "Animes",
+          key: "id",
+        },
+      },
+      MangaId: {
+        type: DataTypes.UUID,
+        allowNull: true,
+        references: {
+          model: "Mangas",
+          key: "id",
+        },
+      },
     },
-    {
+    { 
       sequelize,
       timestamps: false,
       modelName: "Cart",
