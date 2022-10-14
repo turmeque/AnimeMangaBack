@@ -33,7 +33,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price!: number;
     static associate(models: any) {
       Manga.belongsToMany(models.Purchases, { through: 'purchase_manga' })
-     
+      Manga.hasMany(models.Cart, {foreignKey: "MangaId"});
     }
   }
   Manga.init(
