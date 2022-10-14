@@ -31,7 +31,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
     static associate(models: any) {
       Animes.belongsToMany(models.Genres, { through: "anime_genre" });
       Animes.belongsToMany(models.Purchases, { through: "purchase_anime" });
-      Animes.hasMany(models.Cart, {foreignKey: "AnimeId"});
+      Animes.hasMany(models.Cart, { foreignKey: "AnimeId" });
+      Animes.hasMany(models.Reviews, { foreignKey: "AnimeId" });
     }
   }
   Animes.init(
