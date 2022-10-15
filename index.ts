@@ -77,7 +77,7 @@ async function getAnimes() {
           price: a.score + 30,
         });
       });
-
+      console.log('animes')
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
