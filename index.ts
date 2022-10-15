@@ -77,7 +77,7 @@ async function getAnimes() {
           price: a.score + 30,
         });
       });
-      console.log('animes')
+      console.log("animes");
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
@@ -123,9 +123,10 @@ async function preCargaTopAnimes() {
   return { msg: "TopAnimes Creados en db" };
 }
 
-// preCarga();
-// getAnimes();
-// preCargaTopAnimes();
+preCarga();
+getAnimes();
+preCargaTopAnimes();
+
 const port = process.env.PORT || 3000;
 
 db.sequelize.sync({ force: false }).then(async () => {
