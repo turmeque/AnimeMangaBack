@@ -123,10 +123,9 @@ async function preCargaTopAnimes() {
   return { msg: "TopAnimes Creados en db" };
 }
 
-preCarga();
-getAnimes();
+// preCarga();
+// getAnimes();
 // preCargaTopAnimes();
-
 const port = process.env.PORT || 3000;
 
 db.sequelize.sync({ force: false }).then(async () => {
