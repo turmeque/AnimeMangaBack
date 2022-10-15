@@ -28,6 +28,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
       // define association here
       Users.belongsToMany(models.AnimeFavorites, { through: "anime_favorite" });
       Users.hasMany(models.Purchases);
+
+      Users.hasOne(models.PurshasedContent);
+
+      Users.hasMany(models.Cart)
+
       // Users.hasOne(models.Profile);
     }
   }
