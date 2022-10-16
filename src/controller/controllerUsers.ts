@@ -96,7 +96,7 @@ export const googleSignIn = async (id_token: string) => {
 
       // console.log(email);
       if (
-        email === "Jhojangutierrez900@gmail.com" ||
+        email === "jhojangutierrez900@gmail.com" ||
         email === "xdarcx@hotmail.es" ||
         email === "p.manolaki95@gmail.com" ||
         email === "sam.caillat@gmail.com" ||

@@ -1,15 +1,8 @@
-import {Router} from "express"
-
-const topAnimes = require("../controller/controllerTopAnimes")
+import { Router } from "express";
+import { getTopAnimes } from "../controller/controllerTopAnimes";
 
 const router = Router();
 
+router.get("/", getTopAnimes);
 
-
-router.get("/",
-topAnimes.getTopAnimes
-);
-
-
-
-module.exports= router
+module.exports = router;

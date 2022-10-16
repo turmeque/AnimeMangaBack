@@ -77,7 +77,7 @@ async function getAnimes() {
           price: a.score + 30,
         });
       });
-
+      console.log("animes");
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
@@ -125,11 +125,11 @@ async function preCargaTopAnimes() {
 
 preCarga();
 getAnimes();
-// preCargaTopAnimes();
+preCargaTopAnimes();
 
 const port = process.env.PORT || 3000;
 
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false }).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
