@@ -37,7 +37,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+       
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -75,7 +75,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+         
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -113,7 +113,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+       
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
