@@ -9,6 +9,9 @@ import {
   getUserEmail,
   signIn,
   googleSignIn,
+  bannearUser,
+  putUser
+  
 } from "../controller/controllerUsers";
 const server = Router();
 
@@ -75,6 +78,6 @@ server.get("/:email", async (req, res) => {
 
 server.put("/:email", user.putUser);
 
-server.delete("/:email", user.deleteUser);
+server.put("/:id", user.bannearUser);
 
 export default server;

@@ -27,6 +27,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     static associate(models: any) {
       // define association here
       Users.belongsToMany(models.AnimeFavorites, { through: "anime_favorite" });
+      Users.belongsToMany(models.MangaFavorites, { through: "manga_favorite" });
       Users.hasMany(models.Purchases);
 
       Users.hasOne(models.PurshasedContent);

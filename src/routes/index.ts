@@ -3,6 +3,7 @@ const { Router } = require("express");
 const router = Router();
 const anime = require("./animes.ts");
 import animeFavorite from "./animesFavorites";
+import mangaFavorite from "./mangaFavorites";
 const genre = require("./genres.ts");
 const topAnime = require("./topAnimes.ts");
 import manga from "./manga.routes";
@@ -24,6 +25,8 @@ router.use("/animes", anime);
 router.use("/genres", genre);
 router.use("/topAnimes", topAnime);
 router.use("/animefavorites", animeFavorite);
+router.use("/mangafavorites", mangaFavorite);
+
 router.use("/cart", cart);
 
 export default router;
