@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  deleteManga,
   getMangaById,
   getMangaGenres,
   getMangaNews,
@@ -75,5 +76,6 @@ server.get("/:id", async (req, res) => {
     res.status(400).json({ msg: "Something went wrong" });
   }
 });
+server.delete("/:id",deleteManga)
 
 export default server;

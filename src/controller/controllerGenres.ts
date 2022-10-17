@@ -7,7 +7,7 @@ import { Op } from "sequelize";
 // import cloudinary from '../../config/utils'
 import cloudinary from "../../config/utils";
 
-exports.getAllGenres = async (req: Request, res: Response) => {
+export const getAllGenres = async (req: Request, res: Response) => {
   try {
     const genresDB = await db.Genres.findAll();
     res.json({ genresDB });

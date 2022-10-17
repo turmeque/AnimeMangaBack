@@ -2,7 +2,7 @@ import axios from "axios"
 import { Request, Response } from "express";
 import db from "../../models";
 
-import {Op} from 'sequelize'
+
 
 
 // ruta createAnimeFavorites---http://localhost:3000/animeFavorites----//
@@ -26,4 +26,17 @@ export const createAnimeFavorite= async (obj: any) => {
 
   
     return fv;
+  };
+  export const deleteAnimeFavorites = async (req: Request, res: Response) => {
+    try {
+      const id = req.params.id;
+      await db.AnimeFavorites.destroy({
+        where: {
+          id,
+        },
+      });
+      res.send({ info: "AnimeFavorites deleted!!" });
+    } catch (error) {
+      res.send({ error: "Can`t delete AnimeFavorites" });
+    }
   };

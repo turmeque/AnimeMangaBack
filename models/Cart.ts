@@ -34,6 +34,9 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
+      productId: {
+        type: DataTypes.STRING,
+      },
       AnimeId: {
         type: DataTypes.INTEGER,
         allowNull: true,
@@ -51,7 +54,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
         },
       },
     },
-    { 
+    {
       sequelize,
       timestamps: false,
       modelName: "Cart",

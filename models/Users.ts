@@ -2,7 +2,7 @@
 import { UUIDV4, Model } from "sequelize";
 
 interface UserAttributes {
-  id: number;
+  id: string;
   username: string;
   image: string;
   email: string;
@@ -15,7 +15,7 @@ interface UserAttributes {
 
 module.exports = (sequelize: any, DataTypes: any) => {
   class Users extends Model<UserAttributes> implements UserAttributes {
-    id!: number;
+    id!: string;
     username!: string;
     image!: string;
     email!: string;
@@ -27,16 +27,21 @@ module.exports = (sequelize: any, DataTypes: any) => {
     static associate(models: any) {
       // define association here
       Users.belongsToMany(models.AnimeFavorites, { through: "anime_favorite" });
+      Users.belongsToMany(models.MangaFavorites, { through: "manga_favorite" });
       Users.hasMany(models.Purchases);
-      Users.hasMany(models.Cart)
+
+      Users.hasOne(models.PurshasedContent);
+
+      Users.hasMany(models.Cart);
+
       // Users.hasOne(models.Profile);
     }
   }
   Users.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.STRING,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
         unique: true,
       },
