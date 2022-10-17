@@ -21,7 +21,6 @@ server.post("/", async (req, res) => {
     console.error(error);
   }
 });
-export default server;
 
 server.get("/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -42,3 +41,5 @@ server.delete("/:id", async (req, res) => {
     console.error(err);
   }
 });
+
+export default server;

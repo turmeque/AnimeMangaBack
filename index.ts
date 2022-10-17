@@ -125,7 +125,7 @@ async function preCargaTopAnimes() {
 
 preCarga();
 getAnimes();
-// preCargaTopAnimes();
+preCargaTopAnimes();
 
 const port = process.env.PORT || 3000;
 
