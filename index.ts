@@ -1,7 +1,7 @@
 import db from "./models";
 import axios from "axios";
 import app from "./app";
-// import { anime } from "./seeders/anime";
+
 
 async function getAnimes() {
   try {
@@ -77,7 +77,7 @@ async function getAnimes() {
           price: a.score + 30,
         });
       });
-      console.log("animes");
+     
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
@@ -120,7 +120,7 @@ async function preCargaTopAnimes() {
     });
   });
   await db.TopAnimes.bulkCreate(top);
-  return { msg: "TopAnimes Creados en db" };
+  return { msg: "TopAnimes create in DB!!" };
 }
 
 preCarga();
@@ -129,7 +129,7 @@ preCargaTopAnimes();
 
 const port = process.env.PORT || 3000;
 
-db.sequelize.sync({ force: false }).then(async () => {
+db.sequelize.sync({ force: false}).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });
