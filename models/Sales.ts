@@ -2,10 +2,15 @@
 import { Model } from "sequelize";
 
 interface ContentAttributes {
-  name: string;
-  image: string;
-  amount: number;
   id_product: string;
+  userId: string;
+  amount: number;
+  address: string;
+  address2: string;
+  city: string;
+  country: string;
+  cp: number;
+  delivery_process: boolean;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -13,10 +18,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
     extends Model<ContentAttributes>
     implements ContentAttributes
   {
-    name!: string;
-    image!: string;
-    amount!: number;
     id_product!: string;
+    userId!: string;
+    amount!: number;
+    address!: string;
+    address2!: string;
+    city!: string;
+    country!: string;
+    cp!: number;
+    delivery_process!: boolean;
 
     /**
      * Helper method for defining associations.
@@ -30,18 +40,33 @@ module.exports = (sequelize: any, DataTypes: any) => {
   }
   PurshasedContent.init(
     {
-      name: {
+      id_product: {
         type: DataTypes.STRING,
-        allowNull: false,
       },
-      image: {
+      userId: {
         type: DataTypes.STRING,
       },
       amount: {
         type: DataTypes.INTEGER,
       },
-      id_product: {
+      address: {
         type: DataTypes.STRING,
+      },
+      address2: {
+        type: DataTypes.STRING,
+      },
+      city: {
+        type: DataTypes.STRING,
+      },
+      country: {
+        type: DataTypes.STRING,
+      },
+      cp: {
+        type: DataTypes.INTEGER,
+      },
+      delivery_process: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
       },
     },
 

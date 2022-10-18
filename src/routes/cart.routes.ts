@@ -6,16 +6,21 @@ const { Cart } = db;
 const server = Router();
 
 server.post("/", async (req, res) => {
-  // const { id, productId, amount, totalPrice, UserId, category } = req.body;
+  const { id, productId, amount, totalPrice, UserId, category } = req.body;
   try {
-    await Cart.bulkCreate(req.body);
-    res.send("products saved");
+    const response = await postProductInCart({
+      id,
+      productId,
+      amount,
+      totalPrice,
+      UserId,
+      category,
+    });
+    res.send(response);
   } catch (error) {
     console.error(error);
-    res.status(400).json({ msg: "Something went wrong", error });
   }
 });
-export default server;
 
 server.get("/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -36,3 +41,5 @@ server.delete("/:id", async (req, res) => {
     console.error(err);
   }
 });
+
+export default server;

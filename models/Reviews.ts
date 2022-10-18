@@ -5,6 +5,7 @@ interface ReviewsAttributes {
   id: string;
   comment: string;
   rating: number;
+  category: string;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -12,6 +13,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     id!: string;
     comment!: string;
     rating!: number;
+    category!: string;
 
     static associate(models: any) {
       Reviews.belongsTo(models.Animes, { foreignKey: "AnimeId" });
@@ -33,6 +35,10 @@ module.exports = (sequelize: any, DataTypes: any) => {
       },
       rating: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      category: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       AnimeId: {
