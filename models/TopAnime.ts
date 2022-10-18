@@ -30,7 +30,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price!: number;
 
     static associate(models: any) {
-     //  TopAnimes.belongsToMany(models.Genres, { through: 'anime_genre' })
+    
      
     }
   }

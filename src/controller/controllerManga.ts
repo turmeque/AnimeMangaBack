@@ -1,9 +1,10 @@
 require("dotenv").config();
 import axios from "axios";
 import db from "../../models";
+import { Request, Response } from "express";
 
 export const getMangas = async () => {
-  // let allMangas = [];
+  
   const mangasDb = await db.Manga.findAll();
   if (!mangasDb.length) {
     const url = "https://api.jikan.moe/v4/manga/";
@@ -37,7 +38,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+       
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -75,7 +76,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+         
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -113,7 +114,7 @@ export const getMangas = async () => {
         price: number;
       }) => {
         return {
-          // id: d.mal_id,
+       
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -366,3 +367,17 @@ export const searchByName = async (name: any) => {
 };
 
 export const createManga = async (obj: {}) => {};
+
+export const deleteManga = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    await db.Manga.destroy({
+      where: {
+        id,
+      },
+    });
+    res.send({ info: "Manga deleted!!" });
+  } catch (error) {
+    res.send({ error: "Can`t delete Manga" });
+  }
+};
