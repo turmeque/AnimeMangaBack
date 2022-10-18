@@ -80,7 +80,7 @@ async function getAnimes() {
      
       await db.Animes.bulkCreate(animes);
 
-      return { msg: "Anime Creados en db" };
+      return { msg: "Anime create on db" };
     } catch (error) {}
     console.log("Todos los Animes se han cargado correctamente");
   } catch (e) {
@@ -97,7 +97,7 @@ function preCarga() {
       return obj;
     });
     db.Genres.bulkCreate(resApi);
-    return { msg: "Genres Creados en db" };
+    return { msg: "Genres Create on db" };
   });
 }
 
@@ -120,7 +120,7 @@ async function preCargaTopAnimes() {
     });
   });
   await db.TopAnimes.bulkCreate(top);
-  return { msg: "TopAnimes create in DB!!" };
+  return { msg: "TopAnimes create on DB!!" };
 }
 
 preCarga();

@@ -74,7 +74,13 @@ export const signIn = async (obj: any) => {
 
 export const getAllUsers = async () => {
   const allUsers = await db.Users.findAll({
-    include: { model: db.AnimeFavorites },
+    include: [
+      { model: db.AnimeFavorites },
+      { model: db.MangaFavorites },
+
+
+    ]
+
   });
   return allUsers;
 };
@@ -166,7 +172,7 @@ export const putUser = async (req: Request, res: Response) => {
 
 export const bannearUser = async (req: Request, res: Response) => {
   try {
-    let id = req.params.id;
+    let id = req.params.id
     let {isAdmin, isActive } = req.body;
     if(isAdmin === true){
 

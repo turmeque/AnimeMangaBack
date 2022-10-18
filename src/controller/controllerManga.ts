@@ -185,7 +185,7 @@ export const getMangas = async () => {
 export const getMangaGenres = async () => {
   const url = "https://api.jikan.moe/v4/genres/manga";
   const genres = db.GenresManga.findAll();
-  //if genres it doesn't exists in DB it serach them and then it create into DB, else return only the DB genres
+ 
   if (!genres.length) {
     const response = await axios(url);
     const genre = response.data.data.map(
@@ -320,12 +320,7 @@ export const getMangaRecomendations = async () => {
 //Brings the first ten mangas with the name
 export const searchByName = async (name: any) => {
   const url = `https://api.jikan.moe/v4/manga?q=${name}&limit=10`;
-  // const mangasDb = await db.Manga.findAll({
-  //   where: {
-  //     name,
-  //   },
-  // });
-  // if (!mangasDb) {
+
   const response = await axios.get(url);
   const mangas = response.data.data.map(
     (d: {
@@ -361,9 +356,7 @@ export const searchByName = async (name: any) => {
     }
   );
   return mangas;
-  // } else {
-  //   return mangasDb;
-  // }
+
 };
 
 export const createManga = async (obj: {}) => {};
