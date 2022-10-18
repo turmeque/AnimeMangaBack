@@ -9,7 +9,7 @@ import manga from "./manga.routes";
 import login from "./login.routes";
 
 import payment from "./payment.routes";
-import content from "./Content.routes";
+import sales from "./sales.routes";
 import cart from "./cart.routes";
 
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
@@ -19,7 +19,7 @@ router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
 router.use("/manga", manga);
 router.use("/login", login);
 router.use("/payment", payment);
-router.use("/content", content);
+router.use("/content", sales);
 router.use("/animes", anime);
 router.use("/genres", genre);
 router.use("/topAnimes", topAnime);
