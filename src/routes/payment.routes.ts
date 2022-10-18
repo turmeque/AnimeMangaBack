@@ -20,8 +20,8 @@ server.post("/", async (req, res) => {
   
     res.status(200).json({ message: "Successfull payment" });
   } catch (error: any) {
-    console.log(error.raw.message);
-    res.status(400).send(error.raw.message);
+    // console.log(error.raw.message);
+    res.status(400).json(error.raw.message);
   }
 });
 
