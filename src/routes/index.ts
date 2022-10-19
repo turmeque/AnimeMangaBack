@@ -12,7 +12,7 @@ import cart from "./cart.routes";
 import reviews from "./reviews.routes";
 import payment from "./payment.routes";
 import sales from "./sales.routes";
-import cart from "./cart.routes";
+
 
 
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
