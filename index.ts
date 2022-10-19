@@ -123,9 +123,7 @@ async function preCargaTopAnimes() {
   return { msg: "TopAnimes create in DB!!" };
 }
 
-preCarga();
-getAnimes();
-preCargaTopAnimes();
+
 
 (
   app.post('image/upload', (req, res) => {
