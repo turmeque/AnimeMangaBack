@@ -42,4 +42,4 @@ server.delete("/:id", async (req, res) => {
   }
 });
 
-export default server;
+export  default server;

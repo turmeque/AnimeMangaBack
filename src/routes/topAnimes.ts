@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router} from "express"
 import { getTopAnimes } from "../controller/controllerTopAnimes";
 
 const router = Router();

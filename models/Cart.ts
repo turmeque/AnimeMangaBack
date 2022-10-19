@@ -35,7 +35,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
         allowNull: false,
       },
       AnimeId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.UUID,
         allowNull: true,
         references: {
           model: "Animes",

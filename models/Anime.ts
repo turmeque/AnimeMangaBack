@@ -38,8 +38,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
   Animes.init(
     {
       id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
         primaryKey: true,
       },

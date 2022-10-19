@@ -124,6 +124,7 @@ async function preCargaTopAnimes() {
   return { msg: "topAnimes create on DB!!" };
 }
 
+
 preCarga();
 getAnimes();
 preCargaTopAnimes();
@@ -133,6 +134,6 @@ const port = process.env.PORT || 3000;
 
 db.sequelize.sync({ force: false}).then(async () => {
   app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
+    console.log(`App listening on port${port}`);
   });
 });

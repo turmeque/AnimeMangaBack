@@ -54,14 +54,16 @@ export const getAnimeById = async (req:Request,res:Response) => {
 
 export const deleteAnime = async (req: Request, res: Response) => {
   try {
-    const {id} = req.params;
-    await db.Anime.destroy({
+    const id = req.params.id;
+   const anime= await db.Animes.destroy({
       where: {
         id,
       },
     });
+    console.log(anime)
     res.send({ info: "Anime deleted!!" });
   } catch (error) {
+    console.log(error)
     res.send({ error: "Can`t delete Anime" });
   }
 };
