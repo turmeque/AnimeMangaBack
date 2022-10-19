@@ -156,7 +156,7 @@ export const putUser = async (req: Request, res: Response) => {
       }
     );
 
-    res.send("hola");
+    res.send(resDB);
   } catch (error) {
     res.status(400).send("User not update!!");
   }
