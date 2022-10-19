@@ -8,11 +8,9 @@ const genre = require("./genres.ts");
 const topAnime = require("./topAnimes.ts");
 import manga from "./manga.routes";
 import login from "./login.routes";
-import cart from "./cart.routes";
 import reviews from "./reviews.routes";
 import payment from "./payment.routes";
 import sales from "./sales.routes";
-
 
 
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
