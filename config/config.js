@@ -10,6 +10,7 @@ module.exports ={
     "password" : "a1asGtSEthExc3cliecF" 
     //"logging": false
   },
+
   "test": {
     "username": "root",
     "password": null,

@@ -1,8 +1,8 @@
 import {Router} from "express"
 import {
-  createAnimeFavorite
+  createAnimeFavorite, deleteAnimeFavorites
     
-  } from "../controller/ControllerAnimesFavorites";
+  } from "../controller/controllerAnimesFavorites";
 
 const server = Router();
 
@@ -18,6 +18,8 @@ server.post("/", async (req, res) => {
       res.status(400).json({ msg: "Something went wrong", error });
     }
   });
+  
+  server.delete("/:id",deleteAnimeFavorites)
 
 
 

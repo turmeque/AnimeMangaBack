@@ -82,7 +82,12 @@ export const getAllUsers = async () => {
 export const getUserEmail = async (email: any) => {
   const user = await db.Users.findOne({
     where: { email },
-    include: { model: db.AnimeFavorites },
+    include:[
+      { model: db.AnimeFavorites  }, 
+      { model: db.MangaFavorites  },
+
+    ]
+   
   });
   return user;
 };
@@ -138,7 +143,7 @@ export const googleSignIn = async (id_token: string) => {
 
 ///-----ruta putUser http://localhost:3000/login/${email}
 
-exports.putUser = async (req: Request, res: Response) => {
+export const putUser = async (req: Request, res: Response) => {
   try {
     let email = req.params.email;
     let { username, image, cellphone } = req.body;
@@ -151,24 +156,32 @@ exports.putUser = async (req: Request, res: Response) => {
       }
     );
 
-    res.send("hola");
+    res.send(resDB);
   } catch (error) {
     res.status(400).send("User not update!!");
   }
 };
 
-///-----ruta deleteUser http://localhost:3000/login/${email}
+///-----ruta bannearUser http://localhost:3000/login/${id}
 
-exports.deleteUser = async (req: Request, res: Response) => {
+export const bannearUser = async (req: Request, res: Response) => {
   try {
-    const email = req.params.email;
-    await db.Users.destroy({
-      where: {
-        email,
-      },
-    });
-    res.send({ info: "User deleted!!" });
+    let id = req.params.id;
+    let {isAdmin, isActive } = req.body;
+    if(isAdmin === true){
+
+      let resDB = await db.Users.update(
+        { isActive },
+        {
+          where: {
+            id,
+          },
+        }
+      );
+    }
+
+    res.send("User baneado");
   } catch (error) {
-    res.send({ error: "Can`t delete User" });
+    res.status(400).send("User not baneado!!");
   }
 };

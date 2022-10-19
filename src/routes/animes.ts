@@ -1,22 +1,21 @@
-const {Router} = require ("express");
-const animes = require("../controller/controllerAnimes")
+
+const { Router } = require("express");
+import {
+  getAllAnimes,
+  forNameAndEpisodes,
+  getAnimeById,
+  deleteAnime,
+} from "../controller/controllerAnimes";
+
 
 const router = Router();
 
+router.get("/", getAllAnimes);
+
+router.get("/name", forNameAndEpisodes);
+
+router.get("/:id", getAnimeById);
+router.delete("/:id", deleteAnime);
 
 
-router.get("/",
-animes.getAllAnimes
-);
-
-router.get("/name", 
-animes.forNameAndEpisodes
- 
-    
-)
-
-router.get('/:id', 
-animes.getAnimeById
-)
-
-module.exports= router
+module.exports = router;

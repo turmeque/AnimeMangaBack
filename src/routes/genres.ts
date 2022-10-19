@@ -1,13 +1,9 @@
-import {Router} from "express"
+import { Router } from "express";
+import { getAllGenres } from "../controller/controllerGenres";
 
-const genres = require("../controller/controllerGenres")
 
 const router = Router();
 
+router.get("/", getAllGenres);
 
-
-router.get("/",
-genres.getAllGenres
-);
-
-module.exports= router
+module.exports = router;
