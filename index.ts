@@ -125,10 +125,23 @@ async function preCargaTopAnimes() {
 
 preCarga();
 getAnimes();
+preCargaTopAnimes();
+
+(
+  app.post('image/upload', (req, res) => {
+    try{
+      const fileString = req.body.data;
+      console.log(fileString);
+    }catch(error){
+      console.log(error)
+    }
+  })
+)
+
+// preCarga();
+// getAnimes();
 // preCargaTopAnimes();
-
 const port = process.env.PORT || 3000;
-
 
 db.sequelize.sync({ force: true }).then(async () => {
   app.listen(port, () => {
