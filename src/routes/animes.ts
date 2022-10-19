@@ -1,3 +1,4 @@
+
 const { Router } = require("express");
 import {
   getAllAnimes,
@@ -5,6 +6,7 @@ import {
   getAnimeById,
   deleteAnime,
 } from "../controller/controllerAnimes";
+
 
 const router = Router();
 

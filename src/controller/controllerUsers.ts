@@ -16,7 +16,7 @@ export const signUp = async (obj: any) => {
     throw "Missing data require to create a new user";
 
   if (
-    email === "Jhojangutierrez900@gmail.com" ||
+    email === "jhojangutierrez900@gmail.com" ||
     email === "xdarcx@hotmail.es" ||
     email === "p.manolaki95@gmail.com" ||
     email === "sam.caillat@gmail.com" ||
@@ -99,7 +99,7 @@ export const googleSignIn = async (id_token: string) => {
       const googleUser = await googleVerify(id_token);
       const { name, picture, email } = googleUser;
 
-      // console.log(email);
+      
       if (
         email === "jhojangutierrez900@gmail.com" ||
         email === "xdarcx@hotmail.es" ||
