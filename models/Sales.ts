@@ -4,29 +4,32 @@ import { Model } from "sequelize";
 interface ContentAttributes {
   id_product: string;
   userId: string;
+  email: string;
+  name: string;
   amount: number;
   address: string;
   address2: string;
   city: string;
   country: string;
-  cp: number;
+  cp: string;
   delivery_process: boolean;
+  date: string;
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
-  class PurshasedContent
-    extends Model<ContentAttributes>
-    implements ContentAttributes
-  {
+  class Sales extends Model<ContentAttributes> implements ContentAttributes {
     id_product!: string;
     userId!: string;
+    email!: string;
+    name!: string;
     amount!: number;
     address!: string;
     address2!: string;
     city!: string;
     country!: string;
-    cp!: number;
+    cp!: string;
     delivery_process!: boolean;
+    date!: string;
 
     /**
      * Helper method for defining associations.
@@ -35,15 +38,20 @@ module.exports = (sequelize: any, DataTypes: any) => {
      */
     static associate(models: any) {
       // define association here
-      PurshasedContent.belongsTo(models.Users);
     }
   }
-  PurshasedContent.init(
+  Sales.init(
     {
       id_product: {
         type: DataTypes.STRING,
       },
       userId: {
+        type: DataTypes.STRING,
+      },
+      email: {
+        type: DataTypes.STRING,
+      },
+      name: {
         type: DataTypes.STRING,
       },
       amount: {
@@ -68,12 +76,18 @@ module.exports = (sequelize: any, DataTypes: any) => {
         type: DataTypes.BOOLEAN,
         defaultValue: true,
       },
+      date: {
+        type: DataTypes.DATEONLY,
+        defaultValue: DataTypes.NOW,
+      },
     },
 
     {
       sequelize,
-      modelName: "PurshasedContent",
+      updatedAt: false,
+      timestamps: false,
+      modelName: "Sales",
     }
   );
-  return PurshasedContent;
+  return Sales;
 };

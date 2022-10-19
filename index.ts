@@ -2,7 +2,6 @@ import db from "./models";
 import axios from "axios";
 import app from "./app";
 
-
 async function getAnimes() {
   try {
     let url = `https://api.jikan.moe/v4/anime`;
@@ -77,7 +76,7 @@ async function getAnimes() {
           price: a.score + 30,
         });
       });
-     
+
       await db.Animes.bulkCreate(animes);
 
       return { msg: "Anime Creados en db" };
@@ -129,8 +128,7 @@ getAnimes();
 
 const port = process.env.PORT || 3000;
 
-
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false }).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });

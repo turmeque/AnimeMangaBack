@@ -17,7 +17,7 @@ server.post("/", async (req, res) => {
       payment_method: id,
       confirm: true,
     });
-  
+
     res.status(200).json({ message: "Successfull payment" });
   } catch (error: any) {
     // console.log(error.raw.message);
