@@ -1,4 +1,4 @@
-import { DataTypes, UUIDV1, Model, Sequelize, STRING } from 'sequelize'
+import { DataTypes, UUIDV1, Model, Sequelize, STRING } from'sequelize'
 
 interface TopAnimeAttributes {
   id: number;

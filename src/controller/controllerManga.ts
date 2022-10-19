@@ -151,8 +151,8 @@ export const getMangas = async () => {
         };
         price: number;
       }) => {
-        return {
-          // id: d.mal_id,
+        return{
+         
           title: d.titles
             .filter((d) => d.type === "Default")
             .map((d: { title: any }) => d.title)
@@ -318,7 +318,7 @@ export const getMangaRecomendations = async () => {
 };
 
 //Brings the first ten mangas with the name
-export const searchByName = async (name: any) => {
+export const searchByName = async (name:any) => {
   const url = `https://api.jikan.moe/v4/manga?q=${name}&limit=10`;
 
   const response = await axios.get(url);
@@ -332,7 +332,7 @@ export const searchByName = async (name: any) => {
       chapters: null;
       status: any;
       synopsis: any;
-      genres: { name: any; type: any }[];
+      genres: { name: any; type: any}[];
       price: number;
     }) => {
       return {
@@ -348,7 +348,7 @@ export const searchByName = async (name: any) => {
         status: d.status,
         synopsis: d.synopsis,
         genres: d.genres
-          .map((d: { name: any; type: any }) => d.name)
+          .map((d: { name: any; type: any}) => d.name)
           .join(", "),
         price: 4.99
          

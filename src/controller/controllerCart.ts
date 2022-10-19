@@ -7,7 +7,7 @@ export const postProductInCart = async (obj: any) => {
   const user = await db.Users.findOne({ where: { id: UserId } });
   try {
     if (user) {
-      if (category === "manga") {
+      if (category ==="manga") {
         let productAdded = await Cart.create({
           amount,
           totalPrice,

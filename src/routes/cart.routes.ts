@@ -33,12 +33,12 @@ server.get("/:userId", async (req, res) => {
 });
 
 server.delete("/:id", async (req, res) => {
-  const { id } = req.params;
+  const {id} = req.params;
   try {
     const product = await Cart.destroy({ where: { id: id } });
     res.send("Product deleted from cart");
   } catch (err) {
-    console.error(err);
+    console.log(err);
   }
 });
 

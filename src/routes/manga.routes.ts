@@ -14,7 +14,7 @@ const server = Router();
 server.get("/", async (req, res) => {
   try {
     const resp = await getMangas();
-    // console.log(resp.length);
+    
     res.status(200).json(resp);
   } catch (error) {
     res.status(400).json({ msg: "Something went wrong" });

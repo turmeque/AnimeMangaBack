@@ -3,6 +3,7 @@ import axios from "axios";
 import app from "./app";
 
 
+
 async function getAnimes() {
   try {
     let url = `https://api.jikan.moe/v4/anime`;
@@ -116,21 +117,21 @@ async function preCargaTopAnimes() {
       popularity: G.popularity,
       producers: G.producers.map((p: any) => p.name),
       genres: G.genres.map((g: any) => g.name),
-      price: G.score + 30,
+      price: G.score +30,
     });
   });
   await db.TopAnimes.bulkCreate(top);
-  return { msg: "TopAnimes create on DB!!" };
+  return { msg: "topAnimes create on DB!!" };
 }
 
 preCarga();
 getAnimes();
-// preCargaTopAnimes();
+preCargaTopAnimes();
 
 const port = process.env.PORT || 3000;
 
 
-db.sequelize.sync({ force: true }).then(async () => {
+db.sequelize.sync({ force: false}).then(async () => {
   app.listen(port, () => {
     console.log(`App listening on port ${port}`);
   });

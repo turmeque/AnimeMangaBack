@@ -40,7 +40,7 @@ export const forNameAndEpisodes = async (req: Request, res: Response) => {
   } catch (error) {}
 };
 
-export const getAnimeById = async (req: Request, res: Response) => {
+export const getAnimeById = async (req:Request,res:Response) => {
   const { id } = req.params;
   try {
     const animeById = await db.Animes.findOne({ where: { id: id } });
@@ -54,7 +54,7 @@ export const getAnimeById = async (req: Request, res: Response) => {
 
 export const deleteAnime = async (req: Request, res: Response) => {
   try {
-    const id = req.params.id;
+    const {id} = req.params;
     await db.Anime.destroy({
       where: {
         id,

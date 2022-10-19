@@ -1,5 +1,5 @@
 import { Router } from "express";
-import db from "../../models";
+
 const server = Router();
 const Stripe = require("stripe");
 const stripe = new Stripe(process.env.SECRET_CODE);

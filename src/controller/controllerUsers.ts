@@ -27,7 +27,7 @@ export const signUp = async (obj: any) => {
 
   const userExist = await db.Users.findOne({ where: { username } });
   const emailExist = await db.Users.findOne({ where: { email } });
-  // const userGoogle = await db.Users.findOne({ where: { email } });
+
   if (userExist === null && emailExist === null) {
     const password = bcrypt.hashSync(pass, salt);
     const user = await db.Users.create({
@@ -52,12 +52,10 @@ export const signUp = async (obj: any) => {
 export const signIn = async (obj: any) => {
   const { email, password } = obj;
   const user = await db.Users.findOne({
-    where: { email },
+    where: { email},
   });
 
-  // if(!user.isActive) {
-  //   throw 'talk to admin, user blocked'
-  // }
+ 
   if (!user) {
     throw "User with this email not found";
   } else if (!user.isActive) {
@@ -105,7 +103,7 @@ export const googleSignIn = async (id_token: string) => {
       const googleUser = await googleVerify(id_token);
       const { name, picture, email } = googleUser;
 
-      // console.log(email);
+      
       if (
         email === "jhojangutierrez900@gmail.com" ||
         email === "xdarcx@hotmail.es" ||
@@ -162,7 +160,7 @@ export const putUser = async (req: Request, res: Response) => {
       }
     );
 
-    res.send("hola");
+    res.send("User update!!");
   } catch (error) {
     res.status(400).send("User not update!!");
   }
@@ -174,7 +172,7 @@ export const bannearUser = async (req: Request, res: Response) => {
   try {
     let id = req.params.id
     let {isAdmin, isActive } = req.body;
-    if(isAdmin === true){
+   
 
       let resDB = await db.Users.update(
         { isActive },
@@ -184,7 +182,7 @@ export const bannearUser = async (req: Request, res: Response) => {
           },
         }
       );
-    }
+    
 
     res.send("User baneado");
   } catch (error) {

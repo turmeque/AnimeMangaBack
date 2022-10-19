@@ -13,7 +13,7 @@ export const createAnimeFavorite= async (obj: any) => {
     const { title,image,trailer,release,rating,description,producers,popularity,genres,price,user } = obj;
 
     const exists= await db.AnimeFavorites.findOne({ where: { title: title } });
-    if (exists) return ({ Info: "Anime already exists" });
+    if (exists) return ({ Info: "Anime already exist" });
    
  const fv = await db.AnimeFavorites.create({ title,image,trailer,release,rating,description,producers,popularity,genres,price });
 
@@ -29,7 +29,7 @@ export const createAnimeFavorite= async (obj: any) => {
   };
   export const deleteAnimeFavorites = async (req: Request, res: Response) => {
     try {
-      const id = req.params.id;
+      const id = req.params.id
       await db.AnimeFavorites.destroy({
         where: {
           id,

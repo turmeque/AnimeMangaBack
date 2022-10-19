@@ -15,7 +15,7 @@ module.exports = (sequelize:any, DataTypes: any) => {
 
 
         static associate (models:any){
-            Genres.belongsToMany(models.Animes, {through: 'anime_genre'})
+           Genres.belongsToMany(models.Animes, {through: 'anime_genre'})
         }
     }
 

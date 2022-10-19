@@ -1,5 +1,5 @@
 //@ts-nocheck
-import axios from "axios";
+
 import { Request, Response } from "express";
 import db from "../../models";
 
