@@ -30,8 +30,6 @@ module.exports = (sequelize: any, DataTypes: any) => {
       Users.belongsToMany(models.MangaFavorites, { through: "manga_favorite" });
       Users.hasMany(models.Purchases);
 
-      Users.hasOne(models.PurshasedContent);
-
       Users.hasMany(models.Cart);
 
       // Users.hasOne(models.Profile);
