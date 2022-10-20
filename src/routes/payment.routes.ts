@@ -9,7 +9,6 @@ server.post("/", async (req, res) => {
 
   const amount = Number(totalPrice);
 
-  // console.log(typeof amount);
   try {
     const payment = await stripe.paymentIntents.create({
       amount,
@@ -18,11 +17,11 @@ server.post("/", async (req, res) => {
       payment_method: id,
       confirm: true,
     });
-    // console.log(payment);
+
     res.status(200).json({ message: "Successfull payment" });
   } catch (error: any) {
-    console.log(error.raw.message);
-    res.status(400).send(error.raw.message);
+    // console.log(error.raw.message);
+    res.status(400).json(error.raw.message);
   }
 });
 
