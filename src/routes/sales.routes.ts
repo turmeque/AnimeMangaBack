@@ -17,6 +17,7 @@ server.post("/", async (req, res) => {
 
 server.post("/winnings", async (req, res) => {
   const { profit } = req.body;
+  // console.log({ profit });
   try {
     await db.Winning.create({ profit });
     res.status(200).json({ msg: "price successfully set" });
