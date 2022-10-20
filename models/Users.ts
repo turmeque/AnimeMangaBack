@@ -32,7 +32,7 @@ module.exports = (sequelize: any, DataTypes: any) => {
 
       Users.hasMany(models.Cart);
 
-      // Users.hasOne(models.Profile);
+  
     }
   }
   Users.init(

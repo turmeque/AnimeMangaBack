@@ -32,4 +32,4 @@ export const postProductInCart = async (obj: any) => {
   } catch (error) {
     console.log(error);
   }
-};
+}
