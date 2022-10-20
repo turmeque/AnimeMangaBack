@@ -13,7 +13,7 @@ import payment from "./payment.routes";
 import sales from "./sales.routes";
 import cart from "./cart.routes"
 
-
+//hola
 router.get("/", (req: any, res: { send: (arg0: string) => void }) => {
   res.send("Hello world");
 });
