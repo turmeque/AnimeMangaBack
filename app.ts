@@ -8,7 +8,8 @@ import bodyParser from "body-parser";
 // import { dotenv } from "dotenv";
 //import  cloudinary  from './config/utils';
 
-import cors from "cors";
+// import cors from "cors";
+const cors = require("cors");
 
 const app = express();
 //cors:
